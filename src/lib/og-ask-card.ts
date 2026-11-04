@@ -28,6 +28,6 @@ export function askOgSvg(input: { handle: string; name: string; avatarUrl: strin
     <rect x="132" y="452" width="936" height="72" rx="36" fill="#131211"/>
     <text x="600" y="499" text-anchor="middle" font-family="Inter" font-weight="700" font-size="30" fill="#ffffff">${escapeXml(input.cta)}</text>
   </g>
-  <text x="600" y="600" text-anchor="middle" font-family="Inter" font-weight="500" font-size="24" fill="#ffffff" fill-opacity="0.6">🔒 ${escapeXml(input.urlLabel)}</text>
+  <text x="600" y="600" text-anchor="middle" font-family="Inter" font-weight="500" font-size="24" fill="#ffffff" fill-opacity="0.6">${escapeXml(input.urlLabel)}</text>
 </svg>`;
 }

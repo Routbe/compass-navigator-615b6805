@@ -5,6 +5,7 @@ import { themeOf } from "@/lib/profile";
 import { profileSurface } from "@/lib/profile-surface";
 import { fontPairingOf } from "@/lib/profile-design";
 import { ogHeadingFont } from "@/lib/og-fonts";
+import { askOgSvg } from "@/lib/og-ask-card";
 import { sanitizeHandleInput } from "@/lib/validations/sanitizeHandle";
 
 /**
@@ -96,22 +97,20 @@ export const Route = createFileRoute("/api_/public/og/$handle")({
         // Both formats therefore use the same first-party/proxied inline photo.
         const inlineAvatar = avatarUrl ? await fetchImageAsDataUri(avatarUrl, origin) : null;
 
+        const askCard = new URL(request.url).searchParams.get("card") === "ask";
+        const base = space === "alias" ? `rout.be/u/${handle}` : `rout.be/${handle}`;
+        const build = () =>
+          askCard
+            ? askOgSvg({ handle, name, avatarUrl: inlineAvatar, accent, title: "Stuur me een anonieme vraag", placeholder: "Typ hier je anonieme bericht…", cta: "Tik om anoniem te sturen", urlLabel: `${base}/ask` })
+            : ogSvg({ handle, name, tagline, accent, ...design, bg: String(design.bg), avatarUrl: inlineAvatar, ...(urlLabel ? { urlLabel } : {}) });
+
         if (!wantsSvg) {
           try {
             const { svgToPng } = await import("@/lib/og-render.server");
             // resvg haalt zelf geen externe afbeeldingen op: de avatar moet
             // als data-URI in de vector zitten voor we rasteriseren.
             const png = await svgToPng(
-              ogSvg({
-                handle,
-                name,
-                tagline,
-                accent,
-                ...design,
-                bg: String(design.bg),
-                avatarUrl: inlineAvatar,
-                ...(urlLabel ? { urlLabel } : {}),
-              }),
+              build(),
               new URL(request.url).origin,
               String(design.bg),
             );
@@ -124,16 +123,7 @@ export const Route = createFileRoute("/api_/public/og/$handle")({
           }
         }
 
-        const svg = ogSvg({
-          handle,
-          name,
-          tagline,
-          accent,
-          ...design,
-          bg: String(design.bg),
-          avatarUrl: inlineAvatar,
-          ...(urlLabel ? { urlLabel } : {}),
-        });
+        const svg = build();
 
         return new Response(svg, {
           headers: {

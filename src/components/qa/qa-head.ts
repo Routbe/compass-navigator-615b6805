@@ -20,7 +20,11 @@ export function qaAskHead(handle: string, space: QaSpace) {
       { property: "og:description", content: description },
       { property: "og:type", content: "profile" },
       { property: "og:url", content: `https://rout.be${path}` },
-      { name: "twitter:card", content: "summary" },
+      { property: "og:image", content: `https://rout.be/api/public/og/${encodeURIComponent(handle)}.png?card=ask${space === "alias" ? "&space=alias" : ""}` },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: `https://rout.be/api/public/og/${encodeURIComponent(handle)}.png?card=ask${space === "alias" ? "&space=alias" : ""}` },
       { name: "twitter:title", content: title },
       { name: "twitter:description", content: description },
       // Snapchat Creative Kit: sticker shown on the snap that carries this tappable link.
