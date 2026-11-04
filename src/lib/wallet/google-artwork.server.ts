@@ -1,4 +1,4 @@
-import { googleArtworkVersion, googlePremiumArtworkSvg, GOOGLE_PASS_DESIGN } from "./google-premium-art";
+import { googlePassBackground, googleArtworkVersion, googlePremiumArtworkSvg, GOOGLE_PASS_DESIGN } from "./google-premium-art";
 
 /** Public handles only: never export artwork for a private or unknown profile. */
 export async function renderGoogleArtwork(cardId: string, version: string, file: string): Promise<Response> {
@@ -12,6 +12,6 @@ export async function renderGoogleArtwork(cardId: string, version: string, file:
   const { svgToPng } = await import("@/lib/og-render.server");
   const kind = file === "strip.png" ? "strip" : "hero";
   const svg = googlePremiumArtworkSvg(card, kind);
-  const png = await svgToPng(svg, walletOrigin(), GOOGLE_PASS_DESIGN.background, kind === "strip" ? GOOGLE_PASS_DESIGN.stripWidth : GOOGLE_PASS_DESIGN.heroWidth);
+  const png = await svgToPng(svg, walletOrigin(), googlePassBackground(card), kind === "strip" ? GOOGLE_PASS_DESIGN.stripWidth : GOOGLE_PASS_DESIGN.heroWidth);
   return new Response(png as BodyInit, { headers: { "content-type": "image/png", "access-control-allow-origin": "*", "cache-control": "public, max-age=3600, s-maxage=86400", "x-content-type-options": "nosniff" } });
 }

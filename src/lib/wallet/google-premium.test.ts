@@ -1,11 +1,16 @@
+import { hexToOklch } from "./wallet-color";
 import { describe, expect, it } from "vitest";
 import { GOOGLE_PASS_DESIGN, googleArtworkVersion } from "./google-premium-art";
 import { googleCardObject, googleCardSaveClaims, walletCardPayload } from "./wallet-pass";
 
 const card = walletCardPayload({ handle: "maker", space: "root", displayName: "Maker", tagline: "My work", themeBg: "#ff00ff", accent: "#ff0000", avatarSrc: null }, "https://rout.be", "RT-235Q-ABCD-X");
 describe("premium Google pass rules", () => {
-  it("enforces #111318 regardless of saturated profile colours", () => {
-    expect(googleCardObject(card, "3388").hexBackgroundColor).toBe("#111318");
+  it("harmonises saturated profile colours into a dark matte background", () => {
+    const bg = googleCardObject(card, "3388").hexBackgroundColor;
+    const lch = hexToOklch(bg)!;
+    expect(lch.L).toBeGreaterThanOrEqual(0.149);
+    expect(lch.L).toBeLessThanOrEqual(0.201);
+    expect(lch.C).toBeLessThanOrEqual(0.036);
     expect(card.hexBackgroundColor).toBe("#ff00ff");
   });
   it("reserves exactly two front rows for card number and the profile hub", () => {
