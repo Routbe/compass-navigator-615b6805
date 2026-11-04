@@ -1,7 +1,7 @@
 import { saturation, walletCardColor } from "./wallet-art";
 import { cardNumberFromDigest } from "./card-number";
 import { createLocalizedString, walletText } from "./wallet-i18n";
-import { GOOGLE_PASS_DESIGN, googleArtworkVersion, googlePassBackground } from "./google-premium-art";
+import { googleArtworkVersion, googlePassBackground } from "./google-premium-art";
 import { pickLogoTone } from "./wallet-color";
 import type { GoogleCardClaims, GoogleGenericObject } from "./google-pass-types";
 /**
