@@ -1812,5 +1812,11 @@
     "Tap the sticker icon at the top.",
     "Choose the Link sticker and paste your link.",
     "Place the sticker on the image and share your story."
-  ]
+  ],
+  "shareWidget.askOff.title": "Your question page is off",
+  "shareWidget.askOff.body": "People tapping your link can't send you an anonymous message yet. Turn the page on below to share.",
+  "shareWidget.askOff.toggle": "Anonymous question page",
+  "shareWidget.askOff.share": "Share now",
+  "shareWidget.askOff.done": "Your anonymous question page is on.",
+  "shareWidget.askOff.failed": "Couldn't turn it on. Please try again."
 }

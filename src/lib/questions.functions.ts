@@ -253,3 +253,12 @@ export const liftMyMute = createServerFn({ method: "POST" })
     const s = await import("./questions.server");
     return { ok: await s.liftMute(data.id) };
   });
+
+/** Owner: switch the /ask page on immediately (from the share widget prompt). */
+export const enableMyAskPage = createServerFn({ method: "POST" })
+  .middleware([requireAuth])
+  .handler(async ({ context }) => {
+    const { publishAskPageOn } = await import("./profile-drafts.server");
+    await publishAskPageOn(context.userId);
+    return { ok: true };
+  });

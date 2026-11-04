@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Link } from "@/lib/router-compat";
 import { RoutCardDialog } from "@/components/wallet/RoutCardDialog";
 import { cn } from "@/lib/utils";
+import { Switch } from "@/components/ui/switch";
+import { enableMyAskPage, getQaPublic } from "@/lib/questions.functions";
 
 export const SHARE_TARGETS = [
   { id: "hub", path: "", icon: Globe },
@@ -49,6 +51,29 @@ export function ShareWidget({ handle }: { handle: string | null | undefined }) {
       .catch(() => undefined);
     return () => { live = false; };
   }, [handle, url, selected, t]);
+
+  // Know ahead of the tap whether the anonymous ask page is live, so the share sheet still opens inside the tap.
+  const [askOn, setAskOn] = useState<boolean | null>(null);
+  const [askPrompt, setAskPrompt] = useState<Platform | null>(null);
+  const [enabling, setEnabling] = useState(false);
+  useEffect(() => {
+    if (!handle) return;
+    let live = true;
+    getQaPublic({ data: { handle, space: "root" } })
+      .then(({ qa }) => { if (live) setAskOn(Boolean(qa?.page)); })
+      .catch(() => { if (live) setAskOn(null); });
+    return () => { live = false; };
+  }, [handle]);
+  const turnOnAsk = async () => {
+    setEnabling(true);
+    try {
+      await enableMyAskPage();
+      setAskOn(true);
+      toast.success(t("shareWidget.askOff.done", { defaultValue: "Je anonieme vragenpagina staat aan." }));
+    } catch {
+      toast.error(t("shareWidget.askOff.failed", { defaultValue: "Aanzetten lukte niet. Probeer opnieuw." }));
+    } finally { setEnabling(false); }
+  };
 
   const [preview, setPreview] = useState<string | null>(null);
   useEffect(() => {
@@ -98,6 +123,7 @@ export function ShareWidget({ handle }: { handle: string | null | undefined }) {
     });
   };
   const pick = (p: Platform) => {
+    if (selected === "ask" && askOn === false) { setAskPrompt(p); return; }
     if ((p === "snapchat" || p === "instagram") && !localStorage.getItem(GUIDE_KEY + p)) { setStep(0); setGuide(p); return; }
     run(p);
   };
@@ -146,6 +172,20 @@ export function ShareWidget({ handle }: { handle: string | null | undefined }) {
       ) : (
         <p className="text-sm text-muted-foreground">{t("shareWidget.noHandle")}</p>
       )}
+      <Dialog open={askPrompt !== null} onOpenChange={(o) => { if (!o) setAskPrompt(null); }}>
+        <DialogContent className="max-w-sm">
+          <DialogTitle className="font-display text-xl">{t("shareWidget.askOff.title", { defaultValue: "Je vragenpagina staat uit" })}</DialogTitle>
+          <DialogDescription>{t("shareWidget.askOff.body", { defaultValue: "Wie op je link tikt, kan je nu nog geen anoniem bericht sturen. Zet de pagina aan om te delen." })}</DialogDescription>
+          <label className="flex min-h-14 items-center justify-between gap-3 rounded-xl border border-border px-4">
+            <span className="text-sm font-medium">{t("shareWidget.askOff.toggle", { defaultValue: "Anonieme vragenpagina" })}</span>
+            <Switch checked={askOn === true} disabled={enabling || askOn === true} onCheckedChange={(v) => { if (v) void turnOnAsk(); }} />
+          </label>
+          <Button type="button" className="min-h-12 w-full" disabled={askOn !== true}
+            onClick={() => { const p = askPrompt; setAskPrompt(null); if (p) pick(p); }}>
+            {t("shareWidget.askOff.share", { defaultValue: "Nu delen" })}
+          </Button>
+        </DialogContent>
+      </Dialog>
       <Dialog open={guide !== null} onOpenChange={(o) => { if (!o) setGuide(null); }}>
         <DialogContent className="max-w-sm">
           <DialogTitle className="text-center font-display text-xl">{guide ? t(`shareWidget.guide.${guide}.title`) : ""}</DialogTitle>

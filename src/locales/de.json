@@ -1812,5 +1812,11 @@
     "Tippe oben auf das Sticker-Symbol.",
     "Wähle den Link-Sticker und füge deinen Link ein.",
     "Platziere den Sticker und teile deine Story."
-  ]
+  ],
+  "shareWidget.askOff.title": "Deine Fragenseite ist aus",
+  "shareWidget.askOff.body": "Wer auf deinen Link tippt, kann dir noch keine anonyme Nachricht senden. Schalte die Seite unten ein, um zu teilen.",
+  "shareWidget.askOff.toggle": "Anonyme Fragenseite",
+  "shareWidget.askOff.share": "Jetzt teilen",
+  "shareWidget.askOff.done": "Deine anonyme Fragenseite ist an.",
+  "shareWidget.askOff.failed": "Einschalten fehlgeschlagen. Bitte erneut versuchen."
 }
