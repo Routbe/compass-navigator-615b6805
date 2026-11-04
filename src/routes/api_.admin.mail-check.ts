@@ -32,6 +32,16 @@ export const Route = createFileRoute("/api_/admin/mail-check")({
         const { RATE_RULES, tooManyRequests } = await import("@/lib/rate-limit-rules");
         const limit = await hitRateLimit("auth", `${clientIp(request)}:admin-mail-check`, RATE_RULES.authAttempt);
         if (!limit.ok) return tooManyRequests(limit.retryAfter);
+        // Only a signed-in admin may trigger the test mail.
+        const { currentUser } = await import("@/lib/auth/session.server");
+        const user = await currentUser().catch(() => null);
+        if (!user) return Response.json({ error: "unauthorized" }, { status: 401, headers: { "cache-control": "no-store" } });
+        try {
+          const { assertAdminRole } = await import("@/lib/admin.server");
+          await assertAdminRole(user.id);
+        } catch {
+          return Response.json({ error: "forbidden" }, { status: 403, headers: { "cache-control": "no-store" } });
+        }
         const { configuredOwnerEmails } = await import("@/lib/auth/owner-admin.server");
         const { sendMail } = await import("@/emails/send.server");
         const results: { sent: boolean }[] = [];
