@@ -404,6 +404,7 @@ import { Route as ApiPublicBookingsIdActionRouteImport } from './routes/api_.pub
 import { Route as ApiPublicIntegrationsMastodonAvatarRouteImport } from './routes/api_.public.integrations.mastodon.avatar'
 import { Route as ApiWalletRenderCardIdHeroDotpngRouteImport } from './routes/api_.wallet.render.$cardId.hero[.]png'
 import { Route as ApiWalletRenderCardIdVersionFileRouteImport } from './routes/api_.wallet.render.$cardId.$version.$file'
+import { Route as ApiWalletRenderLogoBgFileRouteImport } from './routes/api_.wallet.render.logo.$bg.$file'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -2494,6 +2495,12 @@ const ApiWalletRenderCardIdVersionFileRoute =
     path: '/api/wallet/render/$cardId/$version/$file',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiWalletRenderLogoBgFileRoute =
+  ApiWalletRenderLogoBgFileRouteImport.update({
+    id: '/api_/wallet/render/logo/$bg/$file',
+    path: '/api/wallet/render/logo/$bg/$file',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -2890,6 +2897,7 @@ export interface FileRoutesByFullPath {
   '/api/wallet/render/$cardId/hero.png': typeof ApiWalletRenderCardIdHeroDotpngRoute
   '/console/apps/$appId/': typeof AuthenticatedConsoleAppsAppIdIndexRoute
   '/api/wallet/render/$cardId/$version/$file': typeof ApiWalletRenderCardIdVersionFileRoute
+  '/api/wallet/render/logo/$bg/$file': typeof ApiWalletRenderLogoBgFileRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -3269,6 +3277,7 @@ export interface FileRoutesByTo {
   '/api/wallet/render/$cardId/hero.png': typeof ApiWalletRenderCardIdHeroDotpngRoute
   '/console/apps/$appId': typeof AuthenticatedConsoleAppsAppIdIndexRoute
   '/api/wallet/render/$cardId/$version/$file': typeof ApiWalletRenderCardIdVersionFileRoute
+  '/api/wallet/render/logo/$bg/$file': typeof ApiWalletRenderLogoBgFileRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -3667,6 +3676,7 @@ export interface FileRoutesById {
   '/api_/wallet/render/$cardId/hero.png': typeof ApiWalletRenderCardIdHeroDotpngRoute
   '/_authenticated/console/apps/$appId/': typeof AuthenticatedConsoleAppsAppIdIndexRoute
   '/api_/wallet/render/$cardId/$version/$file': typeof ApiWalletRenderCardIdVersionFileRoute
+  '/api_/wallet/render/logo/$bg/$file': typeof ApiWalletRenderLogoBgFileRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -4065,6 +4075,7 @@ export interface FileRouteTypes {
     | '/api/wallet/render/$cardId/hero.png'
     | '/console/apps/$appId/'
     | '/api/wallet/render/$cardId/$version/$file'
+    | '/api/wallet/render/logo/$bg/$file'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -4444,6 +4455,7 @@ export interface FileRouteTypes {
     | '/api/wallet/render/$cardId/hero.png'
     | '/console/apps/$appId'
     | '/api/wallet/render/$cardId/$version/$file'
+    | '/api/wallet/render/logo/$bg/$file'
   id:
     | '__root__'
     | '/'
@@ -4841,6 +4853,7 @@ export interface FileRouteTypes {
     | '/api_/wallet/render/$cardId/hero.png'
     | '/_authenticated/console/apps/$appId/'
     | '/api_/wallet/render/$cardId/$version/$file'
+    | '/api_/wallet/render/logo/$bg/$file'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -5055,6 +5068,7 @@ export interface RootRouteChildren {
   ApiPublicBookingsIdActionRoute: typeof ApiPublicBookingsIdActionRoute
   ApiWalletRenderCardIdHeroDotpngRoute: typeof ApiWalletRenderCardIdHeroDotpngRoute
   ApiWalletRenderCardIdVersionFileRoute: typeof ApiWalletRenderCardIdVersionFileRoute
+  ApiWalletRenderLogoBgFileRoute: typeof ApiWalletRenderLogoBgFileRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -7824,6 +7838,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiWalletRenderCardIdVersionFileRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api_/wallet/render/logo/$bg/$file': {
+      id: '/api_/wallet/render/logo/$bg/$file'
+      path: '/api/wallet/render/logo/$bg/$file'
+      fullPath: '/api/wallet/render/logo/$bg/$file'
+      preLoaderRoute: typeof ApiWalletRenderLogoBgFileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -8632,6 +8653,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiPublicBookingsIdActionRoute: ApiPublicBookingsIdActionRoute,
   ApiWalletRenderCardIdHeroDotpngRoute: ApiWalletRenderCardIdHeroDotpngRoute,
   ApiWalletRenderCardIdVersionFileRoute: ApiWalletRenderCardIdVersionFileRoute,
+  ApiWalletRenderLogoBgFileRoute: ApiWalletRenderLogoBgFileRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
