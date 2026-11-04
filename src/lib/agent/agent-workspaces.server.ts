@@ -59,16 +59,56 @@ export async function previewAgentClaim(userId: string, tokenHash: string): Prom
   return { name: row.name, slug: row.slug, expiresAt: row.expires_at, claimed: row.claimed, expired: row.expired, appName: row.app_name };
 }
 
-/** Claim: the signed-in human becomes Owner. Throws the DB error text. */
-export async function claimAgentWorkspace(userId: string, tokenHash: string): Promise<{ workspaceId: string; slug: string }> {
+export type ClaimedApp = { name: string; clientId: string; clientSecret: string };
+
+/**
+ * Claim (link token or claim code hash): the signed-in human becomes Owner,
+ * the sandbox key dies, and the agent's login-app specs become real OAuth
+ * clients owned by this human. Secrets are returned once. Throws the DB error text.
+ */
+export async function claimAgentWorkspace(
+  userId: string,
+  hash: string,
+): Promise<{ workspaceId: string; slug: string; apps: ClaimedApp[] }> {
   const rows = await withDbContext({ userId, workspaceId: null }, async () => {
     return (await sql`
-      select workspace_id, slug from public.rout_claim_agent_workspace(${tokenHash})
-    `) as Array<{ workspace_id: string; slug: string }>;
+      select workspace_id, slug, pending_apps from public.rout_claim_agent_workspace_v2(${hash})
+    `) as Array<{ workspace_id: string; slug: string; pending_apps: unknown }>;
   });
   const row = rows[0];
   if (!row) throw new Error("claim_not_found");
-  return { workspaceId: row.workspace_id, slug: row.slug };
+  const { sandboxAppInput } = await import("./agent-sandbox");
+  const specs = (Array.isArray(row.pending_apps) ? row.pending_apps : [])
+    .map((a) => sandboxAppInput.safeParse(a))
+    .filter((r) => r.success)
+    .map((r) => r.data);
+  const apps: ClaimedApp[] = [];
+  if (specs.length) {
+    const { createClient } = await import("@/lib/oauth/provider.server");
+    await withDbContext({ userId, workspaceId: row.workspace_id }, async () => {
+      for (const s of specs) {
+        try {
+          const { client, clientSecret } = await createClient(
+            userId,
+            {
+              name: s.name,
+              description: s.description ?? null,
+              homepageUrl: s.homepage_url ?? null,
+              privacyUrl: s.privacy_url ?? null,
+              termsUrl: s.terms_url ?? null,
+              redirectUris: s.redirect_uris,
+              scopes: s.scopes,
+            },
+            row.workspace_id,
+          );
+          apps.push({ name: client.name, clientId: client.clientId, clientSecret });
+        } catch (error) {
+          console.warn("[agent:claim] app spec skipped:", (error as Error).message);
+        }
+      }
+    });
+  }
+  return { workspaceId: row.workspace_id, slug: row.slug, apps };
 }
 
 /** Cron: hard delete every workspace whose claim expired unclaimed. */

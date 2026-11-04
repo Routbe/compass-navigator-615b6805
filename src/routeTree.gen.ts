@@ -332,6 +332,9 @@ import { Route as AuthenticatedStudioPersonalFeatureRouteImport } from './routes
 import { Route as AuthenticatedStudioWorkspacesNewRouteImport } from './routes/_authenticated/studio_.workspaces.new'
 import { Route as ApiPublicEmailUnsubscribeRouteImport } from './routes/api.public.email.unsubscribe'
 import { Route as ApiAgentProfileDraftRouteImport } from './routes/api_.agent.profile.draft'
+import { Route as ApiAgentSandboxAppsRouteImport } from './routes/api_.agent.sandbox_.apps'
+import { Route as ApiAgentSandboxProfileRouteImport } from './routes/api_.agent.sandbox_.profile'
+import { Route as ApiAgentSandboxWorkspaceRouteImport } from './routes/api_.agent.sandbox_.workspace'
 import { Route as ApiAuditRevertLogIdRouteImport } from './routes/api_.audit.revert.$logId'
 import { Route as ApiPublicAuthProvidersRouteImport } from './routes/api_.public.auth.providers'
 import { Route as ApiPublicBadgeHandleRouteImport } from './routes/api_.public.badge.$handle'
@@ -2087,6 +2090,22 @@ const ApiAgentProfileDraftRoute = ApiAgentProfileDraftRouteImport.update({
   path: '/api/agent/profile/draft',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAgentSandboxAppsRoute = ApiAgentSandboxAppsRouteImport.update({
+  id: '/api_/agent/sandbox_/apps',
+  path: '/api/agent/sandbox/apps',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAgentSandboxProfileRoute = ApiAgentSandboxProfileRouteImport.update({
+  id: '/api_/agent/sandbox_/profile',
+  path: '/api/agent/sandbox/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAgentSandboxWorkspaceRoute =
+  ApiAgentSandboxWorkspaceRouteImport.update({
+    id: '/api_/agent/sandbox_/workspace',
+    path: '/api/agent/sandbox/workspace',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiAuditRevertLogIdRoute = ApiAuditRevertLogIdRouteImport.update({
   id: '/api_/audit/revert/$logId',
   path: '/api/audit/revert/$logId',
@@ -2848,6 +2867,9 @@ export interface FileRoutesByFullPath {
   '/studio/workspaces/new': typeof AuthenticatedStudioWorkspacesNewRoute
   '/api/public/email/unsubscribe': typeof ApiPublicEmailUnsubscribeRoute
   '/api/agent/profile/draft': typeof ApiAgentProfileDraftRoute
+  '/api/agent/sandbox/apps': typeof ApiAgentSandboxAppsRoute
+  '/api/agent/sandbox/profile': typeof ApiAgentSandboxProfileRoute
+  '/api/agent/sandbox/workspace': typeof ApiAgentSandboxWorkspaceRoute
   '/api/audit/revert/$logId': typeof ApiAuditRevertLogIdRoute
   '/api/public/auth/providers': typeof ApiPublicAuthProvidersRoute
   '/api/public/badge/$handle': typeof ApiPublicBadgeHandleRoute
@@ -3232,6 +3254,9 @@ export interface FileRoutesByTo {
   '/studio/workspaces/new': typeof AuthenticatedStudioWorkspacesNewRoute
   '/api/public/email/unsubscribe': typeof ApiPublicEmailUnsubscribeRoute
   '/api/agent/profile/draft': typeof ApiAgentProfileDraftRoute
+  '/api/agent/sandbox/apps': typeof ApiAgentSandboxAppsRoute
+  '/api/agent/sandbox/profile': typeof ApiAgentSandboxProfileRoute
+  '/api/agent/sandbox/workspace': typeof ApiAgentSandboxWorkspaceRoute
   '/api/audit/revert/$logId': typeof ApiAuditRevertLogIdRoute
   '/api/public/auth/providers': typeof ApiPublicAuthProvidersRoute
   '/api/public/badge/$handle': typeof ApiPublicBadgeHandleRoute
@@ -3635,6 +3660,9 @@ export interface FileRoutesById {
   '/_authenticated/studio_/workspaces/new': typeof AuthenticatedStudioWorkspacesNewRoute
   '/api/public/email/unsubscribe': typeof ApiPublicEmailUnsubscribeRoute
   '/api_/agent/profile/draft': typeof ApiAgentProfileDraftRoute
+  '/api_/agent/sandbox_/apps': typeof ApiAgentSandboxAppsRoute
+  '/api_/agent/sandbox_/profile': typeof ApiAgentSandboxProfileRoute
+  '/api_/agent/sandbox_/workspace': typeof ApiAgentSandboxWorkspaceRoute
   '/api_/audit/revert/$logId': typeof ApiAuditRevertLogIdRoute
   '/api_/public/auth/providers': typeof ApiPublicAuthProvidersRoute
   '/api_/public/badge/$handle': typeof ApiPublicBadgeHandleRoute
@@ -4038,6 +4066,9 @@ export interface FileRouteTypes {
     | '/studio/workspaces/new'
     | '/api/public/email/unsubscribe'
     | '/api/agent/profile/draft'
+    | '/api/agent/sandbox/apps'
+    | '/api/agent/sandbox/profile'
+    | '/api/agent/sandbox/workspace'
     | '/api/audit/revert/$logId'
     | '/api/public/auth/providers'
     | '/api/public/badge/$handle'
@@ -4422,6 +4453,9 @@ export interface FileRouteTypes {
     | '/studio/workspaces/new'
     | '/api/public/email/unsubscribe'
     | '/api/agent/profile/draft'
+    | '/api/agent/sandbox/apps'
+    | '/api/agent/sandbox/profile'
+    | '/api/agent/sandbox/workspace'
     | '/api/audit/revert/$logId'
     | '/api/public/auth/providers'
     | '/api/public/badge/$handle'
@@ -4824,6 +4858,9 @@ export interface FileRouteTypes {
     | '/_authenticated/studio_/workspaces/new'
     | '/api/public/email/unsubscribe'
     | '/api_/agent/profile/draft'
+    | '/api_/agent/sandbox_/apps'
+    | '/api_/agent/sandbox_/profile'
+    | '/api_/agent/sandbox_/workspace'
     | '/api_/audit/revert/$logId'
     | '/api_/public/auth/providers'
     | '/api_/public/badge/$handle'
@@ -5062,6 +5099,9 @@ export interface RootRouteChildren {
   UUsernameTipRoute: typeof UUsernameTipRoute
   WSlugFeedbackRoute: typeof WSlugFeedbackRoute
   ApiAgentProfileDraftRoute: typeof ApiAgentProfileDraftRoute
+  ApiAgentSandboxAppsRoute: typeof ApiAgentSandboxAppsRoute
+  ApiAgentSandboxProfileRoute: typeof ApiAgentSandboxProfileRoute
+  ApiAgentSandboxWorkspaceRoute: typeof ApiAgentSandboxWorkspaceRoute
   ApiAuditRevertLogIdRoute: typeof ApiAuditRevertLogIdRoute
   ApiPublicAuthProvidersRoute: typeof ApiPublicAuthProvidersRoute
   ApiPublicBadgeHandleRoute: typeof ApiPublicBadgeHandleRoute
@@ -7383,6 +7423,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAgentProfileDraftRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api_/agent/sandbox_/apps': {
+      id: '/api_/agent/sandbox_/apps'
+      path: '/api/agent/sandbox/apps'
+      fullPath: '/api/agent/sandbox/apps'
+      preLoaderRoute: typeof ApiAgentSandboxAppsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api_/agent/sandbox_/profile': {
+      id: '/api_/agent/sandbox_/profile'
+      path: '/api/agent/sandbox/profile'
+      fullPath: '/api/agent/sandbox/profile'
+      preLoaderRoute: typeof ApiAgentSandboxProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api_/agent/sandbox_/workspace': {
+      id: '/api_/agent/sandbox_/workspace'
+      path: '/api/agent/sandbox/workspace'
+      fullPath: '/api/agent/sandbox/workspace'
+      preLoaderRoute: typeof ApiAgentSandboxWorkspaceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api_/audit/revert/$logId': {
       id: '/api_/audit/revert/$logId'
       path: '/api/audit/revert/$logId'
@@ -8680,6 +8741,9 @@ const rootRouteChildren: RootRouteChildren = {
   UUsernameTipRoute: UUsernameTipRoute,
   WSlugFeedbackRoute: WSlugFeedbackRoute,
   ApiAgentProfileDraftRoute: ApiAgentProfileDraftRoute,
+  ApiAgentSandboxAppsRoute: ApiAgentSandboxAppsRoute,
+  ApiAgentSandboxProfileRoute: ApiAgentSandboxProfileRoute,
+  ApiAgentSandboxWorkspaceRoute: ApiAgentSandboxWorkspaceRoute,
   ApiAuditRevertLogIdRoute: ApiAuditRevertLogIdRoute,
   ApiPublicAuthProvidersRoute: ApiPublicAuthProvidersRoute,
   ApiPublicBadgeHandleRoute: ApiPublicBadgeHandleRoute,
