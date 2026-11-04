@@ -153,14 +153,17 @@ import { Route as InfoBadgesRouteImport } from './routes/info.badges'
 import { Route as InfoBookingsRouteImport } from './routes/info.bookings'
 import { Route as InfoCredentialsRouteImport } from './routes/info.credentials'
 import { Route as InfoCustomBadgesRouteImport } from './routes/info.custom-badges'
+import { Route as InfoEmailForwardingRouteImport } from './routes/info.email-forwarding'
 import { Route as InfoGhostModeRouteImport } from './routes/info.ghost-mode'
 import { Route as InfoGuestbookRouteImport } from './routes/info.guestbook'
 import { Route as InfoHumanVerificationRouteImport } from './routes/info.human-verification'
 import { Route as InfoIntegrationsRouteImport } from './routes/info.integrations'
 import { Route as InfoLinksAndAnalyticsRouteImport } from './routes/info.links-and-analytics'
+import { Route as InfoNewsletterRouteImport } from './routes/info.newsletter'
 import { Route as InfoPaymentPagesRouteImport } from './routes/info.payment-pages'
 import { Route as InfoProfilesRouteImport } from './routes/info.profiles'
 import { Route as InfoQrStudioRouteImport } from './routes/info.qr-studio'
+import { Route as InfoReferralsRouteImport } from './routes/info.referrals'
 import { Route as InfoSignInWithRoutRouteImport } from './routes/info.sign-in-with-rout'
 import { Route as InfoTipsRouteImport } from './routes/info.tips'
 import { Route as InfoUsernamesRouteImport } from './routes/info.usernames'
@@ -1129,6 +1132,11 @@ const InfoCustomBadgesRoute = InfoCustomBadgesRouteImport.update({
   path: '/custom-badges',
   getParentRoute: () => InfoRoute,
 } as any)
+const InfoEmailForwardingRoute = InfoEmailForwardingRouteImport.update({
+  id: '/email-forwarding',
+  path: '/email-forwarding',
+  getParentRoute: () => InfoRoute,
+} as any)
 const InfoGhostModeRoute = InfoGhostModeRouteImport.update({
   id: '/ghost-mode',
   path: '/ghost-mode',
@@ -1154,6 +1162,11 @@ const InfoLinksAndAnalyticsRoute = InfoLinksAndAnalyticsRouteImport.update({
   path: '/links-and-analytics',
   getParentRoute: () => InfoRoute,
 } as any)
+const InfoNewsletterRoute = InfoNewsletterRouteImport.update({
+  id: '/newsletter',
+  path: '/newsletter',
+  getParentRoute: () => InfoRoute,
+} as any)
 const InfoPaymentPagesRoute = InfoPaymentPagesRouteImport.update({
   id: '/payment-pages',
   path: '/payment-pages',
@@ -1167,6 +1180,11 @@ const InfoProfilesRoute = InfoProfilesRouteImport.update({
 const InfoQrStudioRoute = InfoQrStudioRouteImport.update({
   id: '/qr-studio',
   path: '/qr-studio',
+  getParentRoute: () => InfoRoute,
+} as any)
+const InfoReferralsRoute = InfoReferralsRouteImport.update({
+  id: '/referrals',
+  path: '/referrals',
   getParentRoute: () => InfoRoute,
 } as any)
 const InfoSignInWithRoutRoute = InfoSignInWithRoutRouteImport.update({
@@ -2639,14 +2657,17 @@ export interface FileRoutesByFullPath {
   '/info/bookings': typeof InfoBookingsRoute
   '/info/credentials': typeof InfoCredentialsRoute
   '/info/custom-badges': typeof InfoCustomBadgesRoute
+  '/info/email-forwarding': typeof InfoEmailForwardingRoute
   '/info/ghost-mode': typeof InfoGhostModeRoute
   '/info/guestbook': typeof InfoGuestbookRoute
   '/info/human-verification': typeof InfoHumanVerificationRoute
   '/info/integrations': typeof InfoIntegrationsRoute
   '/info/links-and-analytics': typeof InfoLinksAndAnalyticsRoute
+  '/info/newsletter': typeof InfoNewsletterRoute
   '/info/payment-pages': typeof InfoPaymentPagesRoute
   '/info/profiles': typeof InfoProfilesRoute
   '/info/qr-studio': typeof InfoQrStudioRoute
+  '/info/referrals': typeof InfoReferralsRoute
   '/info/sign-in-with-rout': typeof InfoSignInWithRoutRoute
   '/info/tips': typeof InfoTipsRoute
   '/info/usernames': typeof InfoUsernamesRoute
@@ -3022,14 +3043,17 @@ export interface FileRoutesByTo {
   '/info/bookings': typeof InfoBookingsRoute
   '/info/credentials': typeof InfoCredentialsRoute
   '/info/custom-badges': typeof InfoCustomBadgesRoute
+  '/info/email-forwarding': typeof InfoEmailForwardingRoute
   '/info/ghost-mode': typeof InfoGhostModeRoute
   '/info/guestbook': typeof InfoGuestbookRoute
   '/info/human-verification': typeof InfoHumanVerificationRoute
   '/info/integrations': typeof InfoIntegrationsRoute
   '/info/links-and-analytics': typeof InfoLinksAndAnalyticsRoute
+  '/info/newsletter': typeof InfoNewsletterRoute
   '/info/payment-pages': typeof InfoPaymentPagesRoute
   '/info/profiles': typeof InfoProfilesRoute
   '/info/qr-studio': typeof InfoQrStudioRoute
+  '/info/referrals': typeof InfoReferralsRoute
   '/info/sign-in-with-rout': typeof InfoSignInWithRoutRoute
   '/info/tips': typeof InfoTipsRoute
   '/info/usernames': typeof InfoUsernamesRoute
@@ -3418,14 +3442,17 @@ export interface FileRoutesById {
   '/info/bookings': typeof InfoBookingsRoute
   '/info/credentials': typeof InfoCredentialsRoute
   '/info/custom-badges': typeof InfoCustomBadgesRoute
+  '/info/email-forwarding': typeof InfoEmailForwardingRoute
   '/info/ghost-mode': typeof InfoGhostModeRoute
   '/info/guestbook': typeof InfoGuestbookRoute
   '/info/human-verification': typeof InfoHumanVerificationRoute
   '/info/integrations': typeof InfoIntegrationsRoute
   '/info/links-and-analytics': typeof InfoLinksAndAnalyticsRoute
+  '/info/newsletter': typeof InfoNewsletterRoute
   '/info/payment-pages': typeof InfoPaymentPagesRoute
   '/info/profiles': typeof InfoProfilesRoute
   '/info/qr-studio': typeof InfoQrStudioRoute
+  '/info/referrals': typeof InfoReferralsRoute
   '/info/sign-in-with-rout': typeof InfoSignInWithRoutRoute
   '/info/tips': typeof InfoTipsRoute
   '/info/usernames': typeof InfoUsernamesRoute
@@ -3817,14 +3844,17 @@ export interface FileRouteTypes {
     | '/info/bookings'
     | '/info/credentials'
     | '/info/custom-badges'
+    | '/info/email-forwarding'
     | '/info/ghost-mode'
     | '/info/guestbook'
     | '/info/human-verification'
     | '/info/integrations'
     | '/info/links-and-analytics'
+    | '/info/newsletter'
     | '/info/payment-pages'
     | '/info/profiles'
     | '/info/qr-studio'
+    | '/info/referrals'
     | '/info/sign-in-with-rout'
     | '/info/tips'
     | '/info/usernames'
@@ -4200,14 +4230,17 @@ export interface FileRouteTypes {
     | '/info/bookings'
     | '/info/credentials'
     | '/info/custom-badges'
+    | '/info/email-forwarding'
     | '/info/ghost-mode'
     | '/info/guestbook'
     | '/info/human-verification'
     | '/info/integrations'
     | '/info/links-and-analytics'
+    | '/info/newsletter'
     | '/info/payment-pages'
     | '/info/profiles'
     | '/info/qr-studio'
+    | '/info/referrals'
     | '/info/sign-in-with-rout'
     | '/info/tips'
     | '/info/usernames'
@@ -4595,14 +4628,17 @@ export interface FileRouteTypes {
     | '/info/bookings'
     | '/info/credentials'
     | '/info/custom-badges'
+    | '/info/email-forwarding'
     | '/info/ghost-mode'
     | '/info/guestbook'
     | '/info/human-verification'
     | '/info/integrations'
     | '/info/links-and-analytics'
+    | '/info/newsletter'
     | '/info/payment-pages'
     | '/info/profiles'
     | '/info/qr-studio'
+    | '/info/referrals'
     | '/info/sign-in-with-rout'
     | '/info/tips'
     | '/info/usernames'
@@ -6081,6 +6117,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InfoCustomBadgesRouteImport
       parentRoute: typeof InfoRoute
     }
+    '/info/email-forwarding': {
+      id: '/info/email-forwarding'
+      path: '/email-forwarding'
+      fullPath: '/info/email-forwarding'
+      preLoaderRoute: typeof InfoEmailForwardingRouteImport
+      parentRoute: typeof InfoRoute
+    }
     '/info/ghost-mode': {
       id: '/info/ghost-mode'
       path: '/ghost-mode'
@@ -6116,6 +6159,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InfoLinksAndAnalyticsRouteImport
       parentRoute: typeof InfoRoute
     }
+    '/info/newsletter': {
+      id: '/info/newsletter'
+      path: '/newsletter'
+      fullPath: '/info/newsletter'
+      preLoaderRoute: typeof InfoNewsletterRouteImport
+      parentRoute: typeof InfoRoute
+    }
     '/info/payment-pages': {
       id: '/info/payment-pages'
       path: '/payment-pages'
@@ -6135,6 +6185,13 @@ declare module '@tanstack/react-router' {
       path: '/qr-studio'
       fullPath: '/info/qr-studio'
       preLoaderRoute: typeof InfoQrStudioRouteImport
+      parentRoute: typeof InfoRoute
+    }
+    '/info/referrals': {
+      id: '/info/referrals'
+      path: '/referrals'
+      fullPath: '/info/referrals'
+      preLoaderRoute: typeof InfoReferralsRouteImport
       parentRoute: typeof InfoRoute
     }
     '/info/sign-in-with-rout': {
@@ -8203,14 +8260,17 @@ interface InfoRouteChildren {
   InfoBookingsRoute: typeof InfoBookingsRoute
   InfoCredentialsRoute: typeof InfoCredentialsRoute
   InfoCustomBadgesRoute: typeof InfoCustomBadgesRoute
+  InfoEmailForwardingRoute: typeof InfoEmailForwardingRoute
   InfoGhostModeRoute: typeof InfoGhostModeRoute
   InfoGuestbookRoute: typeof InfoGuestbookRoute
   InfoHumanVerificationRoute: typeof InfoHumanVerificationRoute
   InfoIntegrationsRoute: typeof InfoIntegrationsRoute
   InfoLinksAndAnalyticsRoute: typeof InfoLinksAndAnalyticsRoute
+  InfoNewsletterRoute: typeof InfoNewsletterRoute
   InfoPaymentPagesRoute: typeof InfoPaymentPagesRoute
   InfoProfilesRoute: typeof InfoProfilesRoute
   InfoQrStudioRoute: typeof InfoQrStudioRoute
+  InfoReferralsRoute: typeof InfoReferralsRoute
   InfoSignInWithRoutRoute: typeof InfoSignInWithRoutRoute
   InfoTipsRoute: typeof InfoTipsRoute
   InfoUsernamesRoute: typeof InfoUsernamesRoute
@@ -8227,14 +8287,17 @@ const InfoRouteChildren: InfoRouteChildren = {
   InfoBookingsRoute: InfoBookingsRoute,
   InfoCredentialsRoute: InfoCredentialsRoute,
   InfoCustomBadgesRoute: InfoCustomBadgesRoute,
+  InfoEmailForwardingRoute: InfoEmailForwardingRoute,
   InfoGhostModeRoute: InfoGhostModeRoute,
   InfoGuestbookRoute: InfoGuestbookRoute,
   InfoHumanVerificationRoute: InfoHumanVerificationRoute,
   InfoIntegrationsRoute: InfoIntegrationsRoute,
   InfoLinksAndAnalyticsRoute: InfoLinksAndAnalyticsRoute,
+  InfoNewsletterRoute: InfoNewsletterRoute,
   InfoPaymentPagesRoute: InfoPaymentPagesRoute,
   InfoProfilesRoute: InfoProfilesRoute,
   InfoQrStudioRoute: InfoQrStudioRoute,
+  InfoReferralsRoute: InfoReferralsRoute,
   InfoSignInWithRoutRoute: InfoSignInWithRoutRoute,
   InfoTipsRoute: InfoTipsRoute,
   InfoUsernamesRoute: InfoUsernamesRoute,
