@@ -1786,7 +1786,7 @@
   "shareWidget.shareTo": "Delen naar",
   "shareWidget.storyHint": "Tik op de link",
   "shareWidget.linkReady": "Link gekopieerd — plak hem als Link-sticker",
-  "shareWidget.tappableNote": "Je link wordt automatisch gekopieerd. Op Snapchat hangt hij meteen aan je snap; op Instagram plak je hem als Link-sticker zodat iedereen erop kan tikken.",
+  "shareWidget.tappableNote": "Je deelt een verhaalafbeelding en je link wordt gekopieerd. Plak hem in Snapchat via de paperclip of in Instagram als Link-sticker, zodat iedereen erop kan tikken.",
   "shareWidget.story.hub": "Bekijk mijn ROUT",
   "shareWidget.story.ask": "Stuur me anoniem een vraag",
   "shareWidget.story.donate": "Steun mij met een donatie",
@@ -1799,18 +1799,18 @@
   "shareWidget.platform.more": "Meer",
   "shareWidget.guide.next": "Volgende stap",
   "shareWidget.guide.go": "Begrijpen, delen!",
-  "shareWidget.guide.snapchat.title": "Zo komt je link op je Snapchat-verhaal",
+  "shareWidget.guide.snapchat.title": "Zo deel je je afbeelding met klikbare link op Snapchat",
   "shareWidget.guide.snapchat.steps": [
-    "Snapchat opent met je link al aan je snap vast.",
-    "Wil je de afbeelding erbij? Kies hem uit je camerarol.",
-    "Tik op Verhaal om te posten.",
-    "Kijkers tikken op de link en komen meteen op je pagina."
+    "Je verhaalafbeelding opent in het deelmenu — kies Snapchat.",
+    "Tik rechts op het paperclip-icoon 📎.",
+    "Plak je link (die is al gekopieerd).",
+    "Post op je Verhaal — kijkers tikken erop en komen op je pagina."
   ],
   "shareWidget.guide.instagram.title": "Zo voeg je de link toe aan je Instagram-verhaal",
   "shareWidget.guide.instagram.steps": [
-    "Je link is al gekopieerd. Kies Instagram-verhaal in het deelmenu.",
+    "Je afbeelding opent in het deelmenu — kies Instagram-verhaal.",
     "Tik bovenaan op het sticker-icoon.",
     "Kies de Link-sticker en plak je link.",
-    "Plaats de sticker en deel je verhaal."
+    "Plaats de sticker op de afbeelding en deel je verhaal."
   ]
 }

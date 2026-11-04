@@ -1786,7 +1786,7 @@
   "shareWidget.shareTo": "Share to",
   "shareWidget.storyHint": "Tap the link",
   "shareWidget.linkReady": "Link copied — paste it as a Link sticker",
-  "shareWidget.tappableNote": "Your link is copied automatically. On Snapchat it's attached to your snap right away; on Instagram paste it as a Link sticker so anyone can tap it.",
+  "shareWidget.tappableNote": "You share a story image and your link is copied. Paste it in Snapchat via the paperclip or in Instagram as a Link sticker so anyone can tap it.",
   "shareWidget.story.hub": "Check out my ROUT",
   "shareWidget.story.ask": "Send me an anonymous question",
   "shareWidget.story.donate": "Support me with a donation",
@@ -1799,18 +1799,18 @@
   "shareWidget.platform.more": "More",
   "shareWidget.guide.next": "Next step",
   "shareWidget.guide.go": "Got it, share!",
-  "shareWidget.guide.snapchat.title": "How your link gets on your Snapchat story",
+  "shareWidget.guide.snapchat.title": "Share your image with a tappable link on Snapchat",
   "shareWidget.guide.snapchat.steps": [
-    "Snapchat opens with your link already attached.",
-    "Want the image too? Pick it from your camera roll.",
-    "Tap Story to post.",
-    "Viewers tap the link and land on your page."
+    "Your story image opens in the share sheet — pick Snapchat.",
+    "Tap the paperclip icon 📎 on the right.",
+    "Paste your link (it's already copied).",
+    "Post to your Story — viewers tap it and land on your page."
   ],
   "shareWidget.guide.instagram.title": "How to add the link to your Instagram story",
   "shareWidget.guide.instagram.steps": [
-    "Your link is copied. Choose Instagram Story in the share menu.",
+    "Your image opens in the share sheet — pick Instagram Story.",
     "Tap the sticker icon at the top.",
     "Choose the Link sticker and paste your link.",
-    "Place the sticker and share your story."
+    "Place the sticker on the image and share your story."
   ]
 }
