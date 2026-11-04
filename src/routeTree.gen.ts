@@ -248,6 +248,7 @@ import { Route as ApiBookingsIdRouteImport } from './routes/api.bookings.$id'
 import { Route as ApiAdminMailCheckRouteImport } from './routes/api_.admin.mail-check'
 import { Route as ApiAgentIdentityRouteImport } from './routes/api_.agent.identity'
 import { Route as ApiAgentLinksRouteImport } from './routes/api_.agent.links'
+import { Route as ApiAgentSandboxRouteImport } from './routes/api_.agent.sandbox'
 import { Route as ApiAgentWorkspacesRouteImport } from './routes/api_.agent.workspaces'
 import { Route as ApiAiRewriteRouteImport } from './routes/api_.ai.rewrite'
 import { Route as ApiAuthSplatRouteImport } from './routes/api_.auth.$'
@@ -1639,6 +1640,11 @@ const ApiAgentLinksRoute = ApiAgentLinksRouteImport.update({
   path: '/api/agent/links',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAgentSandboxRoute = ApiAgentSandboxRouteImport.update({
+  id: '/api_/agent/sandbox',
+  path: '/api/agent/sandbox',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAgentWorkspacesRoute = ApiAgentWorkspacesRouteImport.update({
   id: '/api_/agent/workspaces',
   path: '/api/agent/workspaces',
@@ -2756,6 +2762,7 @@ export interface FileRoutesByFullPath {
   '/api/admin/mail-check': typeof ApiAdminMailCheckRoute
   '/api/agent/identity': typeof ApiAgentIdentityRoute
   '/api/agent/links': typeof ApiAgentLinksRoute
+  '/api/agent/sandbox': typeof ApiAgentSandboxRoute
   '/api/agent/workspaces': typeof ApiAgentWorkspacesRoute
   '/api/ai/rewrite': typeof ApiAiRewriteRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -3140,6 +3147,7 @@ export interface FileRoutesByTo {
   '/api/admin/mail-check': typeof ApiAdminMailCheckRoute
   '/api/agent/identity': typeof ApiAgentIdentityRoute
   '/api/agent/links': typeof ApiAgentLinksRoute
+  '/api/agent/sandbox': typeof ApiAgentSandboxRoute
   '/api/agent/workspaces': typeof ApiAgentWorkspacesRoute
   '/api/ai/rewrite': typeof ApiAiRewriteRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -3541,6 +3549,7 @@ export interface FileRoutesById {
   '/api_/admin/mail-check': typeof ApiAdminMailCheckRoute
   '/api_/agent/identity': typeof ApiAgentIdentityRoute
   '/api_/agent/links': typeof ApiAgentLinksRoute
+  '/api_/agent/sandbox': typeof ApiAgentSandboxRoute
   '/api_/agent/workspaces': typeof ApiAgentWorkspacesRoute
   '/api_/ai/rewrite': typeof ApiAiRewriteRoute
   '/api_/auth/$': typeof ApiAuthSplatRoute
@@ -3943,6 +3952,7 @@ export interface FileRouteTypes {
     | '/api/admin/mail-check'
     | '/api/agent/identity'
     | '/api/agent/links'
+    | '/api/agent/sandbox'
     | '/api/agent/workspaces'
     | '/api/ai/rewrite'
     | '/api/auth/$'
@@ -4327,6 +4337,7 @@ export interface FileRouteTypes {
     | '/api/admin/mail-check'
     | '/api/agent/identity'
     | '/api/agent/links'
+    | '/api/agent/sandbox'
     | '/api/agent/workspaces'
     | '/api/ai/rewrite'
     | '/api/auth/$'
@@ -4727,6 +4738,7 @@ export interface FileRouteTypes {
     | '/api_/admin/mail-check'
     | '/api_/agent/identity'
     | '/api_/agent/links'
+    | '/api_/agent/sandbox'
     | '/api_/agent/workspaces'
     | '/api_/ai/rewrite'
     | '/api_/auth/$'
@@ -5000,6 +5012,7 @@ export interface RootRouteChildren {
   ApiAdminMailCheckRoute: typeof ApiAdminMailCheckRoute
   ApiAgentIdentityRoute: typeof ApiAgentIdentityRoute
   ApiAgentLinksRoute: typeof ApiAgentLinksRoute
+  ApiAgentSandboxRoute: typeof ApiAgentSandboxRoute
   ApiAgentWorkspacesRoute: typeof ApiAgentWorkspacesRoute
   ApiAiRewriteRoute: typeof ApiAiRewriteRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
@@ -6780,6 +6793,13 @@ declare module '@tanstack/react-router' {
       path: '/api/agent/links'
       fullPath: '/api/agent/links'
       preLoaderRoute: typeof ApiAgentLinksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api_/agent/sandbox': {
+      id: '/api_/agent/sandbox'
+      path: '/api/agent/sandbox'
+      fullPath: '/api/agent/sandbox'
+      preLoaderRoute: typeof ApiAgentSandboxRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api_/agent/workspaces': {
@@ -8610,6 +8630,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAdminMailCheckRoute: ApiAdminMailCheckRoute,
   ApiAgentIdentityRoute: ApiAgentIdentityRoute,
   ApiAgentLinksRoute: ApiAgentLinksRoute,
+  ApiAgentSandboxRoute: ApiAgentSandboxRoute,
   ApiAgentWorkspacesRoute: ApiAgentWorkspacesRoute,
   ApiAiRewriteRoute: ApiAiRewriteRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
