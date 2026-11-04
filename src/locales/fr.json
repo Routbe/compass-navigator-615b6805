@@ -1786,7 +1786,7 @@
   "shareWidget.shareTo": "Partager sur",
   "shareWidget.storyHint": "Touchez le lien",
   "shareWidget.linkReady": "Lien copié — collez-le en sticker Lien",
-  "shareWidget.tappableNote": "Votre lien est copié automatiquement. Sur Snapchat, il est joint directement à votre snap ; sur Instagram, collez-le en sticker Lien pour que tout le monde puisse le toucher.",
+  "shareWidget.tappableNote": "Tu partages une image story et ton lien est copié. Colle-le dans Snapchat via le trombone ou dans Instagram en sticker Lien pour que tout le monde puisse le toucher.",
   "shareWidget.story.hub": "Découvre mon ROUT",
   "shareWidget.story.ask": "Envoie-moi une question anonyme",
   "shareWidget.story.donate": "Soutiens-moi par un don",
@@ -1799,18 +1799,18 @@
   "shareWidget.platform.more": "Plus",
   "shareWidget.guide.next": "Étape suivante",
   "shareWidget.guide.go": "Compris, partager !",
-  "shareWidget.guide.snapchat.title": "Comment ajouter ton lien à ta story Snapchat",
+  "shareWidget.guide.snapchat.title": "Partage ton image avec un lien cliquable sur Snapchat",
   "shareWidget.guide.snapchat.steps": [
-    "Snapchat s'ouvre avec ton lien déjà joint.",
-    "Tu veux l'image aussi ? Choisis-la dans ta pellicule.",
-    "Touche Story pour publier.",
-    "Les spectateurs touchent le lien et arrivent sur ta page."
+    "Ton image story s'ouvre dans le menu de partage — choisis Snapchat.",
+    "Touche l'icône trombone 📎 à droite.",
+    "Colle ton lien (il est déjà copié).",
+    "Publie dans ta Story — on touche le lien et on arrive sur ta page."
   ],
   "shareWidget.guide.instagram.title": "Comment ajouter le lien à ta story Instagram",
   "shareWidget.guide.instagram.steps": [
-    "Ton lien est copié. Choisis Story Instagram dans le menu de partage.",
+    "Ton image s'ouvre dans le menu de partage — choisis Story Instagram.",
     "Touche l'icône sticker en haut.",
     "Choisis le sticker Lien et colle ton lien.",
-    "Place le sticker et partage ta story."
+    "Place le sticker sur l'image et partage ta story."
   ]
 }

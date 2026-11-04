@@ -50,6 +50,13 @@ export function ShareWidget({ handle }: { handle: string | null | undefined }) {
     return () => { live = false; };
   }, [handle, url, selected, t]);
 
+  const [preview, setPreview] = useState<string | null>(null);
+  useEffect(() => {
+    if (!file) { setPreview(null); return; }
+    const u = URL.createObjectURL(file); setPreview(u);
+    return () => URL.revokeObjectURL(u);
+  }, [file]);
+
   const copyLink = async (silent = false) => {
     try { await navigator.clipboard.writeText(url); } catch { return; }
     setCopied(true);
@@ -62,35 +69,43 @@ export function ShareWidget({ handle }: { handle: string | null | undefined }) {
     a.href = URL.createObjectURL(file); a.download = file.name; a.click();
     window.setTimeout(() => URL.revokeObjectURL(a.href), 4000);
   };
-  const shareImage = async (withText: boolean) => {
+  // navigator.share must start inside the tap: never await anything before it.
+  const shareImage = async (withText: boolean): Promise<boolean> => {
     if (file && supportsStoryShare(file)) {
       try {
         await navigator.share(withText ? { files: [file], text: `${t(`shareWidget.story.${selected}`)} ${url}` } : { files: [file] });
-        return;
-      } catch (e) { if ((e as Error).name === "AbortError") return; }
+        return true;
+      } catch (e) { if ((e as Error).name === "AbortError") return true; }
     }
-    if (navigator.share) { try { await navigator.share({ url }); return; } catch (e) { if ((e as Error).name === "AbortError") return; } }
-    download();
+    return false;
   };
-  const run = async (p: Platform) => {
-    if (p === "snapchat") {
+  const run = (p: Platform) => {
+    if (p === "snapchat" || p === "instagram") {
       void copyLink(true);
-      // Snapchat attaches the URL as a tappable link on the snap.
-      window.open(`https://www.snapchat.com/scan?attachmentUrl=${encodeURIComponent(url)}`, "_blank", "noopener,noreferrer");
+      void shareImage(false).then((ok) => {
+        if (ok) return;
+        // Desktop / no file sharing: save the image and keep the link on the clipboard.
+        download();
+        toast.success(t("shareWidget.linkReady"));
+      });
       return;
     }
-    if (p === "instagram") { await copyLink(true); toast.success(t("shareWidget.linkReady")); await shareImage(false); return; }
-    await shareImage(p === "whatsapp" || p === "more");
+    void shareImage(true).then(async (ok) => {
+      if (ok) return;
+      if (navigator.share) { try { await navigator.share({ url }); return; } catch (e) { if ((e as Error).name === "AbortError") return; } }
+      await copyLink();
+      download();
+    });
   };
   const pick = (p: Platform) => {
     if ((p === "snapchat" || p === "instagram") && !localStorage.getItem(GUIDE_KEY + p)) { setStep(0); setGuide(p); return; }
-    void run(p);
+    run(p);
   };
   const steps = guide ? (t(`shareWidget.guide.${guide}.steps`, { returnObjects: true }) as string[]) : [];
   const finishGuide = () => {
     if (!guide) return;
     localStorage.setItem(GUIDE_KEY + guide, "1");
-    const p = guide; setGuide(null); void run(p);
+    const p = guide; setGuide(null); run(p);
   };
 
   return (
@@ -119,7 +134,7 @@ export function ShareWidget({ handle }: { handle: string | null | undefined }) {
           </div>
           <div className="grid grid-cols-4 gap-2" aria-label={t("shareWidget.shareTo")}>
             {PLATFORMS.map((p) => (
-              <button key={p} type="button" onClick={() => pick(p)} disabled={p !== "snapchat" && !file}
+              <button key={p} type="button" onClick={() => pick(p)} disabled={!file}
                 className="flex min-h-16 min-w-0 flex-col items-center justify-center gap-1.5 rounded-xl border border-border bg-background/40 px-1 text-xs transition-colors hover:border-foreground/40 disabled:opacity-50">
                 {p === "more" ? <Share2 className="h-5 w-5" aria-hidden /> : <span className="font-display text-base leading-none" aria-hidden>{p === "snapchat" ? "👻" : p === "instagram" ? "◎" : "✆"}</span>}
                 <span className="max-w-full truncate">{t(`shareWidget.platform.${p}`)}</span>
@@ -140,10 +155,7 @@ export function ShareWidget({ handle }: { handle: string | null | undefined }) {
               <span key={i} className={cn("grid h-8 w-8 place-items-center rounded-full text-sm font-semibold transition-colors", i === step ? "bg-foreground text-background" : "bg-muted text-muted-foreground")}>{i + 1}</span>
             ))}
           </div>
-          <div key={step} className="relative grid aspect-[4/3] place-items-center overflow-hidden rounded-2xl bg-muted/60 animate-in fade-in slide-in-from-right-4 duration-300">
-            <span className="absolute h-16 w-16 animate-ping rounded-full bg-foreground/10" aria-hidden />
-            <span className="relative font-display text-5xl" aria-hidden>{step + 1}</span>
-          </div>
+          {guide ? <GuideDemo platform={guide} step={step} preview={preview} /> : null}
           <p className="min-h-12 text-center text-base font-medium" aria-live="polite">{steps[step]}</p>
           <Button type="button" className="min-h-12 w-full" onClick={() => (step < steps.length - 1 ? setStep(step + 1) : finishGuide())}>
             {step < steps.length - 1 ? t("shareWidget.guide.next") : t("shareWidget.guide.go")}
@@ -151,6 +163,46 @@ export function ShareWidget({ handle }: { handle: string | null | undefined }) {
         </DialogContent>
       </Dialog>
     </section>
+  );
+}
+
+/** Looping mini-phone animation per guide step — a lightweight stand-in for a video clip. */
+function GuideDemo({ platform, step, preview }: { platform: Platform; step: number; preview: string | null }) {
+  const snap = platform === "snapchat";
+  const tools = snap ? ["T", "✎", "📎", "✂"] : ["Aa", "☺", "▣", "✦"];
+  const hot = step === 1 ? 2 : -1;
+  return (
+    <div key={`${platform}-${step}`} className="relative grid aspect-[4/3] place-items-center overflow-hidden rounded-2xl bg-muted/60 animate-in fade-in duration-300" aria-hidden>
+      <div className="relative h-[88%] aspect-[9/16] overflow-hidden rounded-[1.1rem] border-4 border-foreground bg-background shadow-lg">
+        {preview ? <img src={preview} alt="" className="absolute inset-0 h-full w-full object-cover" /> : null}
+        {step === 0 ? (
+          <div className="absolute inset-x-0 bottom-0 flex justify-around rounded-t-xl bg-card/95 p-2 animate-in slide-in-from-bottom duration-500">
+            {["👻", "◎", "✆"].map((s, i) => (
+              <span key={s} className={cn("grid h-6 w-6 place-items-center rounded-full bg-muted text-[11px]", (snap ? i === 0 : i === 1) && "ring-2 ring-foreground animate-pulse")}>{s}</span>
+            ))}
+          </div>
+        ) : null}
+        {step >= 1 ? (
+          <div className={cn("absolute flex gap-1", snap ? "right-1 top-2 flex-col" : "inset-x-0 top-1 justify-center")}>
+            {tools.map((s, i) => (
+              <span key={s} className={cn("grid h-5 w-5 place-items-center rounded-full bg-background/80 text-[9px] font-semibold", i === hot && "ring-2 ring-foreground animate-pulse")}>{s}</span>
+            ))}
+          </div>
+        ) : null}
+        {step === 2 ? (
+          <div className="absolute inset-x-2 top-1/3 rounded-lg bg-card p-1.5 text-center text-[8px] font-mono shadow animate-in zoom-in-90 duration-500">
+            {snap ? "📎 " : "🔗 "}rout.link/…
+            <div className="mt-1 rounded bg-foreground py-0.5 text-[8px] text-background animate-pulse">{snap ? "Attach" : "Done"}</div>
+          </div>
+        ) : null}
+        {step === 3 ? (
+          <>
+            <span className="absolute left-1/2 top-[62%] -translate-x-1/2 rounded-full bg-foreground px-2 py-0.5 text-[8px] text-background shadow animate-in zoom-in duration-500">🔗 rout.link</span>
+            <span className="absolute left-1/2 top-[62%] h-6 w-6 -translate-x-1/2 animate-ping rounded-full bg-foreground/30" />
+          </>
+        ) : null}
+      </div>
+    </div>
   );
 }
 
