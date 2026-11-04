@@ -75,6 +75,7 @@ import { Route as DotwellKnownAtprotoDidRouteImport } from './routes/[.]well-kno
 import { Route as DotwellKnownJwksDotjsonRouteImport } from './routes/[.]well-known.jwks[.]json'
 import { Route as DotwellKnownOpenapiDotjsonRouteImport } from './routes/[.]well-known.openapi[.]json'
 import { Route as DotwellKnownOpenidConfigurationRouteImport } from './routes/[.]well-known.openid-configuration'
+import { Route as DotwellKnownRoutAgentDotjsonRouteImport } from './routes/[.]well-known.rout-agent[.]json'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedAgendaRouteImport } from './routes/_authenticated/agenda'
 import { Route as AuthenticatedConsoleRouteImport } from './routes/_authenticated/console'
@@ -84,6 +85,7 @@ import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedWalletRouteImport } from './routes/_authenticated/wallet'
 import { Route as APublicIdRouteImport } from './routes/a.$publicId'
 import { Route as AboutIndexRouteImport } from './routes/about.index'
+import { Route as AboutAiAgentsRouteImport } from './routes/about.ai-agents'
 import { Route as AboutAnonymousQuestionsRouteImport } from './routes/about.anonymous-questions'
 import { Route as AboutBadgesRouteImport } from './routes/about.badges'
 import { Route as AboutBrandRouteImport } from './routes/about.brand'
@@ -745,6 +747,12 @@ const DotwellKnownOpenidConfigurationRoute =
     path: '/.well-known/openid-configuration',
     getParentRoute: () => rootRouteImport,
   } as any)
+const DotwellKnownRoutAgentDotjsonRoute =
+  DotwellKnownRoutAgentDotjsonRouteImport.update({
+    id: '/.well-known/rout-agent.json',
+    path: '/.well-known/rout-agent.json',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -788,6 +796,11 @@ const APublicIdRoute = APublicIdRouteImport.update({
 const AboutIndexRoute = AboutIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => AboutRoute,
+} as any)
+const AboutAiAgentsRoute = AboutAiAgentsRouteImport.update({
+  id: '/ai-agents',
+  path: '/ai-agents',
   getParentRoute: () => AboutRoute,
 } as any)
 const AboutAnonymousQuestionsRoute = AboutAnonymousQuestionsRouteImport.update({
@@ -2618,6 +2631,7 @@ export interface FileRoutesByFullPath {
   '/.well-known/jwks.json': typeof DotwellKnownJwksDotjsonRoute
   '/.well-known/openapi.json': typeof DotwellKnownOpenapiDotjsonRoute
   '/.well-known/openid-configuration': typeof DotwellKnownOpenidConfigurationRoute
+  '/.well-known/rout-agent.json': typeof DotwellKnownRoutAgentDotjsonRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/agenda': typeof AuthenticatedAgendaRoute
   '/console': typeof AuthenticatedConsoleRouteWithChildren
@@ -2626,6 +2640,7 @@ export interface FileRoutesByFullPath {
   '/settings': typeof AuthenticatedSettingsRoute
   '/wallet': typeof AuthenticatedWalletRoute
   '/a/$publicId': typeof APublicIdRoute
+  '/about/ai-agents': typeof AboutAiAgentsRoute
   '/about/anonymous-questions': typeof AboutAnonymousQuestionsRoute
   '/about/badges': typeof AboutBadgesRoute
   '/about/brand': typeof AboutBrandRoute
@@ -3011,12 +3026,14 @@ export interface FileRoutesByTo {
   '/.well-known/jwks.json': typeof DotwellKnownJwksDotjsonRoute
   '/.well-known/openapi.json': typeof DotwellKnownOpenapiDotjsonRoute
   '/.well-known/openid-configuration': typeof DotwellKnownOpenidConfigurationRoute
+  '/.well-known/rout-agent.json': typeof DotwellKnownRoutAgentDotjsonRoute
   '/agenda': typeof AuthenticatedAgendaRoute
   '/domains': typeof AuthenticatedDomainsRoute
   '/my-data': typeof AuthenticatedMyDataRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/wallet': typeof AuthenticatedWalletRoute
   '/a/$publicId': typeof APublicIdRoute
+  '/about/ai-agents': typeof AboutAiAgentsRoute
   '/about/anonymous-questions': typeof AboutAnonymousQuestionsRoute
   '/about/badges': typeof AboutBadgesRoute
   '/about/brand': typeof AboutBrandRoute
@@ -3413,6 +3430,7 @@ export interface FileRoutesById {
   '/.well-known/jwks.json': typeof DotwellKnownJwksDotjsonRoute
   '/.well-known/openapi.json': typeof DotwellKnownOpenapiDotjsonRoute
   '/.well-known/openid-configuration': typeof DotwellKnownOpenidConfigurationRoute
+  '/.well-known/rout-agent.json': typeof DotwellKnownRoutAgentDotjsonRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/agenda': typeof AuthenticatedAgendaRoute
   '/_authenticated/console': typeof AuthenticatedConsoleRouteWithChildren
@@ -3421,6 +3439,7 @@ export interface FileRoutesById {
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/wallet': typeof AuthenticatedWalletRoute
   '/a/$publicId': typeof APublicIdRoute
+  '/about/ai-agents': typeof AboutAiAgentsRoute
   '/about/anonymous-questions': typeof AboutAnonymousQuestionsRoute
   '/about/badges': typeof AboutBadgesRoute
   '/about/brand': typeof AboutBrandRoute
@@ -3820,6 +3839,7 @@ export interface FileRouteTypes {
     | '/.well-known/jwks.json'
     | '/.well-known/openapi.json'
     | '/.well-known/openid-configuration'
+    | '/.well-known/rout-agent.json'
     | '/admin'
     | '/agenda'
     | '/console'
@@ -3828,6 +3848,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/wallet'
     | '/a/$publicId'
+    | '/about/ai-agents'
     | '/about/anonymous-questions'
     | '/about/badges'
     | '/about/brand'
@@ -4213,12 +4234,14 @@ export interface FileRouteTypes {
     | '/.well-known/jwks.json'
     | '/.well-known/openapi.json'
     | '/.well-known/openid-configuration'
+    | '/.well-known/rout-agent.json'
     | '/agenda'
     | '/domains'
     | '/my-data'
     | '/settings'
     | '/wallet'
     | '/a/$publicId'
+    | '/about/ai-agents'
     | '/about/anonymous-questions'
     | '/about/badges'
     | '/about/brand'
@@ -4614,6 +4637,7 @@ export interface FileRouteTypes {
     | '/.well-known/jwks.json'
     | '/.well-known/openapi.json'
     | '/.well-known/openid-configuration'
+    | '/.well-known/rout-agent.json'
     | '/_authenticated/admin'
     | '/_authenticated/agenda'
     | '/_authenticated/console'
@@ -4622,6 +4646,7 @@ export interface FileRouteTypes {
     | '/_authenticated/settings'
     | '/_authenticated/wallet'
     | '/a/$publicId'
+    | '/about/ai-agents'
     | '/about/anonymous-questions'
     | '/about/badges'
     | '/about/brand'
@@ -5021,6 +5046,7 @@ export interface RootRouteChildren {
   DotwellKnownJwksDotjsonRoute: typeof DotwellKnownJwksDotjsonRoute
   DotwellKnownOpenapiDotjsonRoute: typeof DotwellKnownOpenapiDotjsonRoute
   DotwellKnownOpenidConfigurationRoute: typeof DotwellKnownOpenidConfigurationRoute
+  DotwellKnownRoutAgentDotjsonRoute: typeof DotwellKnownRoutAgentDotjsonRoute
   APublicIdRoute: typeof APublicIdRoute
   AccountAccountViewRoute: typeof AccountAccountViewRoute
   ApiMcpRoute: typeof ApiMcpRoute
@@ -5637,6 +5663,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DotwellKnownOpenidConfigurationRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/.well-known/rout-agent.json': {
+      id: '/.well-known/rout-agent.json'
+      path: '/.well-known/rout-agent.json'
+      fullPath: '/.well-known/rout-agent.json'
+      preLoaderRoute: typeof DotwellKnownRoutAgentDotjsonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/admin': {
       id: '/_authenticated/admin'
       path: '/admin'
@@ -5698,6 +5731,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/about/'
       preLoaderRoute: typeof AboutIndexRouteImport
+      parentRoute: typeof AboutRoute
+    }
+    '/about/ai-agents': {
+      id: '/about/ai-agents'
+      path: '/ai-agents'
+      fullPath: '/about/ai-agents'
+      preLoaderRoute: typeof AboutAiAgentsRouteImport
       parentRoute: typeof AboutRoute
     }
     '/about/anonymous-questions': {
@@ -8211,6 +8251,7 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
 )
 
 interface AboutRouteChildren {
+  AboutAiAgentsRoute: typeof AboutAiAgentsRoute
   AboutAnonymousQuestionsRoute: typeof AboutAnonymousQuestionsRoute
   AboutBadgesRoute: typeof AboutBadgesRoute
   AboutBrandRoute: typeof AboutBrandRoute
@@ -8227,6 +8268,7 @@ interface AboutRouteChildren {
 }
 
 const AboutRouteChildren: AboutRouteChildren = {
+  AboutAiAgentsRoute: AboutAiAgentsRoute,
   AboutAnonymousQuestionsRoute: AboutAnonymousQuestionsRoute,
   AboutBadgesRoute: AboutBadgesRoute,
   AboutBrandRoute: AboutBrandRoute,
@@ -8673,6 +8715,7 @@ const rootRouteChildren: RootRouteChildren = {
   DotwellKnownJwksDotjsonRoute: DotwellKnownJwksDotjsonRoute,
   DotwellKnownOpenapiDotjsonRoute: DotwellKnownOpenapiDotjsonRoute,
   DotwellKnownOpenidConfigurationRoute: DotwellKnownOpenidConfigurationRoute,
+  DotwellKnownRoutAgentDotjsonRoute: DotwellKnownRoutAgentDotjsonRoute,
   APublicIdRoute: APublicIdRoute,
   AccountAccountViewRoute: AccountAccountViewRoute,
   ApiMcpRoute: ApiMcpRoute,
