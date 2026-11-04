@@ -50,6 +50,13 @@ export function ShareWidget({ handle }: { handle: string | null | undefined }) {
     return () => { live = false; };
   }, [handle, url, selected, t]);
 
+  const [preview, setPreview] = useState<string | null>(null);
+  useEffect(() => {
+    if (!file) { setPreview(null); return; }
+    const u = URL.createObjectURL(file); setPreview(u);
+    return () => URL.revokeObjectURL(u);
+  }, [file]);
+
   const copyLink = async (silent = false) => {
     try { await navigator.clipboard.writeText(url); } catch { return; }
     setCopied(true);
@@ -156,6 +163,46 @@ export function ShareWidget({ handle }: { handle: string | null | undefined }) {
         </DialogContent>
       </Dialog>
     </section>
+  );
+}
+
+/** Looping mini-phone animation per guide step — a lightweight stand-in for a video clip. */
+function GuideDemo({ platform, step, preview }: { platform: Platform; step: number; preview: string | null }) {
+  const snap = platform === "snapchat";
+  const tools = snap ? ["T", "✎", "📎", "✂"] : ["Aa", "☺", "▣", "✦"];
+  const hot = step === 1 ? 2 : -1;
+  return (
+    <div key={`${platform}-${step}`} className="relative grid aspect-[4/3] place-items-center overflow-hidden rounded-2xl bg-muted/60 animate-in fade-in duration-300" aria-hidden>
+      <div className="relative h-[88%] aspect-[9/16] overflow-hidden rounded-[1.1rem] border-4 border-foreground bg-background shadow-lg">
+        {preview ? <img src={preview} alt="" className="absolute inset-0 h-full w-full object-cover" /> : null}
+        {step === 0 ? (
+          <div className="absolute inset-x-0 bottom-0 flex justify-around rounded-t-xl bg-card/95 p-2 animate-in slide-in-from-bottom duration-500">
+            {["👻", "◎", "✆"].map((s, i) => (
+              <span key={s} className={cn("grid h-6 w-6 place-items-center rounded-full bg-muted text-[11px]", (snap ? i === 0 : i === 1) && "ring-2 ring-foreground animate-pulse")}>{s}</span>
+            ))}
+          </div>
+        ) : null}
+        {step >= 1 ? (
+          <div className={cn("absolute flex gap-1", snap ? "right-1 top-2 flex-col" : "inset-x-0 top-1 justify-center")}>
+            {tools.map((s, i) => (
+              <span key={s} className={cn("grid h-5 w-5 place-items-center rounded-full bg-background/80 text-[9px] font-semibold", i === hot && "ring-2 ring-foreground animate-pulse")}>{s}</span>
+            ))}
+          </div>
+        ) : null}
+        {step === 2 ? (
+          <div className="absolute inset-x-2 top-1/3 rounded-lg bg-card p-1.5 text-center text-[8px] font-mono shadow animate-in zoom-in-90 duration-500">
+            {snap ? "📎 " : "🔗 "}rout.link/…
+            <div className="mt-1 rounded bg-foreground py-0.5 text-[8px] text-background animate-pulse">{snap ? "Attach" : "Done"}</div>
+          </div>
+        ) : null}
+        {step === 3 ? (
+          <>
+            <span className="absolute left-1/2 top-[62%] -translate-x-1/2 rounded-full bg-foreground px-2 py-0.5 text-[8px] text-background shadow animate-in zoom-in duration-500">🔗 rout.link</span>
+            <span className="absolute left-1/2 top-[62%] h-6 w-6 -translate-x-1/2 animate-ping rounded-full bg-foreground/30" />
+          </>
+        ) : null}
+      </div>
+    </div>
   );
 }
 
