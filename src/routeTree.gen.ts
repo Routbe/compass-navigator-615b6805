@@ -329,6 +329,7 @@ import { Route as AuthenticatedConsoleAppsIndexRouteImport } from './routes/_aut
 import { Route as AuthenticatedConsoleAppsAppIdRouteImport } from './routes/_authenticated/console.apps.$appId'
 import { Route as AuthenticatedConsoleAppsNewRouteImport } from './routes/_authenticated/console.apps.new'
 import { Route as AuthenticatedStudioPersonalFeatureRouteImport } from './routes/_authenticated/studio_.personal.$feature'
+import { Route as AuthenticatedStudioWorkspacesClaimRouteImport } from './routes/_authenticated/studio_.workspaces.claim'
 import { Route as AuthenticatedStudioWorkspacesNewRouteImport } from './routes/_authenticated/studio_.workspaces.new'
 import { Route as ApiPublicEmailUnsubscribeRouteImport } from './routes/api.public.email.unsubscribe'
 import { Route as ApiAgentProfileDraftRouteImport } from './routes/api_.agent.profile.draft'
@@ -2073,6 +2074,12 @@ const AuthenticatedStudioPersonalFeatureRoute =
     path: '/studio/personal/$feature',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedStudioWorkspacesClaimRoute =
+  AuthenticatedStudioWorkspacesClaimRouteImport.update({
+    id: '/studio_/workspaces/claim',
+    path: '/studio/workspaces/claim',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedStudioWorkspacesNewRoute =
   AuthenticatedStudioWorkspacesNewRouteImport.update({
     id: '/studio_/workspaces/new',
@@ -2864,6 +2871,7 @@ export interface FileRoutesByFullPath {
   '/console/apps/$appId': typeof AuthenticatedConsoleAppsAppIdRouteWithChildren
   '/console/apps/new': typeof AuthenticatedConsoleAppsNewRoute
   '/studio/personal/$feature': typeof AuthenticatedStudioPersonalFeatureRoute
+  '/studio/workspaces/claim': typeof AuthenticatedStudioWorkspacesClaimRoute
   '/studio/workspaces/new': typeof AuthenticatedStudioWorkspacesNewRoute
   '/api/public/email/unsubscribe': typeof ApiPublicEmailUnsubscribeRoute
   '/api/agent/profile/draft': typeof ApiAgentProfileDraftRoute
@@ -3251,6 +3259,7 @@ export interface FileRoutesByTo {
   '/qr-code-generator/payment': typeof QrCodeGeneratorPaymentIndexRoute
   '/console/apps/new': typeof AuthenticatedConsoleAppsNewRoute
   '/studio/personal/$feature': typeof AuthenticatedStudioPersonalFeatureRoute
+  '/studio/workspaces/claim': typeof AuthenticatedStudioWorkspacesClaimRoute
   '/studio/workspaces/new': typeof AuthenticatedStudioWorkspacesNewRoute
   '/api/public/email/unsubscribe': typeof ApiPublicEmailUnsubscribeRoute
   '/api/agent/profile/draft': typeof ApiAgentProfileDraftRoute
@@ -3657,6 +3666,7 @@ export interface FileRoutesById {
   '/_authenticated/console/apps/$appId': typeof AuthenticatedConsoleAppsAppIdRouteWithChildren
   '/_authenticated/console/apps/new': typeof AuthenticatedConsoleAppsNewRoute
   '/_authenticated/studio_/personal/$feature': typeof AuthenticatedStudioPersonalFeatureRoute
+  '/_authenticated/studio_/workspaces/claim': typeof AuthenticatedStudioWorkspacesClaimRoute
   '/_authenticated/studio_/workspaces/new': typeof AuthenticatedStudioWorkspacesNewRoute
   '/api/public/email/unsubscribe': typeof ApiPublicEmailUnsubscribeRoute
   '/api_/agent/profile/draft': typeof ApiAgentProfileDraftRoute
@@ -4063,6 +4073,7 @@ export interface FileRouteTypes {
     | '/console/apps/$appId'
     | '/console/apps/new'
     | '/studio/personal/$feature'
+    | '/studio/workspaces/claim'
     | '/studio/workspaces/new'
     | '/api/public/email/unsubscribe'
     | '/api/agent/profile/draft'
@@ -4450,6 +4461,7 @@ export interface FileRouteTypes {
     | '/qr-code-generator/payment'
     | '/console/apps/new'
     | '/studio/personal/$feature'
+    | '/studio/workspaces/claim'
     | '/studio/workspaces/new'
     | '/api/public/email/unsubscribe'
     | '/api/agent/profile/draft'
@@ -4855,6 +4867,7 @@ export interface FileRouteTypes {
     | '/_authenticated/console/apps/$appId'
     | '/_authenticated/console/apps/new'
     | '/_authenticated/studio_/personal/$feature'
+    | '/_authenticated/studio_/workspaces/claim'
     | '/_authenticated/studio_/workspaces/new'
     | '/api/public/email/unsubscribe'
     | '/api_/agent/profile/draft'
@@ -7402,6 +7415,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedStudioPersonalFeatureRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/studio_/workspaces/claim': {
+      id: '/_authenticated/studio_/workspaces/claim'
+      path: '/studio/workspaces/claim'
+      fullPath: '/studio/workspaces/claim'
+      preLoaderRoute: typeof AuthenticatedStudioWorkspacesClaimRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/studio_/workspaces/new': {
       id: '/_authenticated/studio_/workspaces/new'
       path: '/studio/workspaces/new'
@@ -8144,6 +8164,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedStudioBookingRoute: typeof AuthenticatedStudioBookingRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
   AuthenticatedStudioPersonalFeatureRoute: typeof AuthenticatedStudioPersonalFeatureRoute
+  AuthenticatedStudioWorkspacesClaimRoute: typeof AuthenticatedStudioWorkspacesClaimRoute
   AuthenticatedStudioWorkspacesNewRoute: typeof AuthenticatedStudioWorkspacesNewRoute
   AuthenticatedStudioWWorkspaceSlugFeatureRoute: typeof AuthenticatedStudioWWorkspaceSlugFeatureRoute
   AuthenticatedStudioWWorkspaceSlugHubRoute: typeof AuthenticatedStudioWWorkspaceSlugHubRoute
@@ -8172,6 +8193,8 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
   AuthenticatedStudioPersonalFeatureRoute:
     AuthenticatedStudioPersonalFeatureRoute,
+  AuthenticatedStudioWorkspacesClaimRoute:
+    AuthenticatedStudioWorkspacesClaimRoute,
   AuthenticatedStudioWorkspacesNewRoute: AuthenticatedStudioWorkspacesNewRoute,
   AuthenticatedStudioWWorkspaceSlugFeatureRoute:
     AuthenticatedStudioWWorkspaceSlugFeatureRoute,
