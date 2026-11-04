@@ -26,7 +26,7 @@ import { mastodonAvatarSrc } from "@/lib/mastodon-avatar";
 import { profileImageSrc } from "@/lib/image-proxy-rules";
 import { useScope, useWorkspaceContext } from "@/components/WorkspaceSwitcher";
 import { WorkspaceIcon } from "@/components/workspace/WorkspaceIcon";
-import { Shield, CreditCard, ArrowLeft, ArrowLeftRight, Check as CheckIcon, Plus as PlusIcon, User as UserIcon } from "lucide-react";
+import { Shield, CreditCard, ArrowLeft, ArrowLeftRight, Check as CheckIcon, Plus as PlusIcon, User as UserIcon, Cog as CogIcon } from "lucide-react";
 import { canUseDeveloperTools } from "@/lib/workspace-rules";
 import { getMyAccount } from "@/lib/account.functions";
 import { contextBadge, contextLinks, GLOBAL_ACCOUNT_LINK } from "@/lib/context-menu";
@@ -200,9 +200,14 @@ export function ProfileMenu() {
                 </DropdownMenuItem>
               ))}
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={scopeApi.newWorkspace} className="gap-2">
-                <PlusIcon className="h-4 w-4" aria-hidden /> {trI18n.t("workspace.new")}
-              </DropdownMenuItem>
+              <div className="flex items-center">
+                <DropdownMenuItem onClick={scopeApi.newWorkspace} className="flex-1 gap-2">
+                  <PlusIcon className="h-4 w-4" aria-hidden /> {trI18n.t("workspace.new")}
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => nav("/studio/workspaces/claim")} aria-label="Workspace claimen" title="Workspace claimen" className="h-9 w-9 justify-center p-0">
+                  <CogIcon className="h-4 w-4" aria-hidden />
+                </DropdownMenuItem>
+              </div>
           </> : <>
           <DropdownMenuSeparator />
           <div className="flex items-center gap-2 px-2 py-1.5 text-xs">

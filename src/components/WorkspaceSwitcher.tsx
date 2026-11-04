@@ -3,7 +3,7 @@ import { DocHelpLink } from "@/components/seo/DocHelpLink";
 import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { Check, ChevronsUpDown, Plus, User, Users } from "lucide-react";
+import { Check, ChevronsUpDown, Cog, Plus, User, Users } from "lucide-react";
 import { toast } from "sonner";
 import { useNavigate } from "@tanstack/react-router";
 import { featureForPath, scopedPath } from "@/lib/scope-routes";
@@ -117,9 +117,14 @@ export function WorkspaceSwitcher({ alwaysShow = false }: { alwaysShow?: boolean
             <Users className="mr-2 h-4 w-4" /> Workspace-instellingen
           </DropdownMenuItem>
         )}
-        <DropdownMenuItem onClick={newWorkspace}>
-          <Plus className="mr-2 h-4 w-4" /> {t("workspace.new")}
-        </DropdownMenuItem>
+        <div className="flex items-center">
+          <DropdownMenuItem onClick={newWorkspace} className="flex-1">
+            <Plus className="mr-2 h-4 w-4" /> {t("workspace.new")}
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => void navigate({ to: "/studio/workspaces/claim" })} aria-label="Workspace claimen" title="Workspace claimen" className="h-8 w-8 justify-center p-0">
+            <Cog className="h-4 w-4" aria-hidden />
+          </DropdownMenuItem>
+        </div>
         <DropdownMenuSeparator />
         <div className="px-2 py-2"><DocHelpLink to="/support/workspace/getting-started/what-is-a-workspace">Hoe werken bedrijfsaccounts?</DocHelpLink></div>
       </DropdownMenuContent>
