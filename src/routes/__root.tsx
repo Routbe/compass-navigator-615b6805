@@ -157,6 +157,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
       { rel: "manifest", href: "/manifest.webmanifest" },
+      { rel: "alternate", type: "application/json", href: "/.well-known/rout-agent.json", title: "ROUT agent sandbox (AI agents: build a workspace without an account)" },
       { rel: "icon", href: "/favicon.png?v=rout-transparent-3", type: "image/png", sizes: "64x64" },
       { rel: "apple-touch-icon", href: "/apple-touch-icon.png?v=rout-bunny-2", sizes: "180x180" },
     ],
