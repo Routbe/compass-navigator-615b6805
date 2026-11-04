@@ -201,6 +201,9 @@ export function Footer() {
             </a>
           </p>
           <StatusWidget className="font-mono text-xs" />
+          <Link to="/about/ai-agents" className="text-[10px] text-muted-foreground/60 hover:text-foreground" data-agent-entry="/.well-known/rout-agent.json">
+            Voor AI-agents
+          </Link>
 
         </div>
       </div>

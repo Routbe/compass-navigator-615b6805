@@ -75,6 +75,7 @@ import { Route as DotwellKnownAtprotoDidRouteImport } from './routes/[.]well-kno
 import { Route as DotwellKnownJwksDotjsonRouteImport } from './routes/[.]well-known.jwks[.]json'
 import { Route as DotwellKnownOpenapiDotjsonRouteImport } from './routes/[.]well-known.openapi[.]json'
 import { Route as DotwellKnownOpenidConfigurationRouteImport } from './routes/[.]well-known.openid-configuration'
+import { Route as DotwellKnownRoutAgentDotjsonRouteImport } from './routes/[.]well-known.rout-agent[.]json'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedAgendaRouteImport } from './routes/_authenticated/agenda'
 import { Route as AuthenticatedConsoleRouteImport } from './routes/_authenticated/console'
@@ -84,6 +85,7 @@ import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedWalletRouteImport } from './routes/_authenticated/wallet'
 import { Route as APublicIdRouteImport } from './routes/a.$publicId'
 import { Route as AboutIndexRouteImport } from './routes/about.index'
+import { Route as AboutAiAgentsRouteImport } from './routes/about.ai-agents'
 import { Route as AboutAnonymousQuestionsRouteImport } from './routes/about.anonymous-questions'
 import { Route as AboutBadgesRouteImport } from './routes/about.badges'
 import { Route as AboutBrandRouteImport } from './routes/about.brand'
@@ -248,6 +250,7 @@ import { Route as ApiBookingsIdRouteImport } from './routes/api.bookings.$id'
 import { Route as ApiAdminMailCheckRouteImport } from './routes/api_.admin.mail-check'
 import { Route as ApiAgentIdentityRouteImport } from './routes/api_.agent.identity'
 import { Route as ApiAgentLinksRouteImport } from './routes/api_.agent.links'
+import { Route as ApiAgentSandboxRouteImport } from './routes/api_.agent.sandbox'
 import { Route as ApiAgentWorkspacesRouteImport } from './routes/api_.agent.workspaces'
 import { Route as ApiAiRewriteRouteImport } from './routes/api_.ai.rewrite'
 import { Route as ApiAuthSplatRouteImport } from './routes/api_.auth.$'
@@ -328,9 +331,13 @@ import { Route as AuthenticatedConsoleAppsIndexRouteImport } from './routes/_aut
 import { Route as AuthenticatedConsoleAppsAppIdRouteImport } from './routes/_authenticated/console.apps.$appId'
 import { Route as AuthenticatedConsoleAppsNewRouteImport } from './routes/_authenticated/console.apps.new'
 import { Route as AuthenticatedStudioPersonalFeatureRouteImport } from './routes/_authenticated/studio_.personal.$feature'
+import { Route as AuthenticatedStudioWorkspacesClaimRouteImport } from './routes/_authenticated/studio_.workspaces.claim'
 import { Route as AuthenticatedStudioWorkspacesNewRouteImport } from './routes/_authenticated/studio_.workspaces.new'
 import { Route as ApiPublicEmailUnsubscribeRouteImport } from './routes/api.public.email.unsubscribe'
 import { Route as ApiAgentProfileDraftRouteImport } from './routes/api_.agent.profile.draft'
+import { Route as ApiAgentSandboxAppsRouteImport } from './routes/api_.agent.sandbox_.apps'
+import { Route as ApiAgentSandboxProfileRouteImport } from './routes/api_.agent.sandbox_.profile'
+import { Route as ApiAgentSandboxWorkspaceRouteImport } from './routes/api_.agent.sandbox_.workspace'
 import { Route as ApiAuditRevertLogIdRouteImport } from './routes/api_.audit.revert.$logId'
 import { Route as ApiPublicAuthProvidersRouteImport } from './routes/api_.public.auth.providers'
 import { Route as ApiPublicBadgeHandleRouteImport } from './routes/api_.public.badge.$handle'
@@ -740,6 +747,12 @@ const DotwellKnownOpenidConfigurationRoute =
     path: '/.well-known/openid-configuration',
     getParentRoute: () => rootRouteImport,
   } as any)
+const DotwellKnownRoutAgentDotjsonRoute =
+  DotwellKnownRoutAgentDotjsonRouteImport.update({
+    id: '/.well-known/rout-agent.json',
+    path: '/.well-known/rout-agent.json',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -783,6 +796,11 @@ const APublicIdRoute = APublicIdRouteImport.update({
 const AboutIndexRoute = AboutIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => AboutRoute,
+} as any)
+const AboutAiAgentsRoute = AboutAiAgentsRouteImport.update({
+  id: '/ai-agents',
+  path: '/ai-agents',
   getParentRoute: () => AboutRoute,
 } as any)
 const AboutAnonymousQuestionsRoute = AboutAnonymousQuestionsRouteImport.update({
@@ -1639,6 +1657,11 @@ const ApiAgentLinksRoute = ApiAgentLinksRouteImport.update({
   path: '/api/agent/links',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAgentSandboxRoute = ApiAgentSandboxRouteImport.update({
+  id: '/api_/agent/sandbox',
+  path: '/api/agent/sandbox',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAgentWorkspacesRoute = ApiAgentWorkspacesRouteImport.update({
   id: '/api_/agent/workspaces',
   path: '/api/agent/workspaces',
@@ -2064,6 +2087,12 @@ const AuthenticatedStudioPersonalFeatureRoute =
     path: '/studio/personal/$feature',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedStudioWorkspacesClaimRoute =
+  AuthenticatedStudioWorkspacesClaimRouteImport.update({
+    id: '/studio_/workspaces/claim',
+    path: '/studio/workspaces/claim',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 const AuthenticatedStudioWorkspacesNewRoute =
   AuthenticatedStudioWorkspacesNewRouteImport.update({
     id: '/studio_/workspaces/new',
@@ -2081,6 +2110,22 @@ const ApiAgentProfileDraftRoute = ApiAgentProfileDraftRouteImport.update({
   path: '/api/agent/profile/draft',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAgentSandboxAppsRoute = ApiAgentSandboxAppsRouteImport.update({
+  id: '/api_/agent/sandbox_/apps',
+  path: '/api/agent/sandbox/apps',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAgentSandboxProfileRoute = ApiAgentSandboxProfileRouteImport.update({
+  id: '/api_/agent/sandbox_/profile',
+  path: '/api/agent/sandbox/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAgentSandboxWorkspaceRoute =
+  ApiAgentSandboxWorkspaceRouteImport.update({
+    id: '/api_/agent/sandbox_/workspace',
+    path: '/api/agent/sandbox/workspace',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiAuditRevertLogIdRoute = ApiAuditRevertLogIdRouteImport.update({
   id: '/api_/audit/revert/$logId',
   path: '/api/audit/revert/$logId',
@@ -2586,6 +2631,7 @@ export interface FileRoutesByFullPath {
   '/.well-known/jwks.json': typeof DotwellKnownJwksDotjsonRoute
   '/.well-known/openapi.json': typeof DotwellKnownOpenapiDotjsonRoute
   '/.well-known/openid-configuration': typeof DotwellKnownOpenidConfigurationRoute
+  '/.well-known/rout-agent.json': typeof DotwellKnownRoutAgentDotjsonRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/agenda': typeof AuthenticatedAgendaRoute
   '/console': typeof AuthenticatedConsoleRouteWithChildren
@@ -2594,6 +2640,7 @@ export interface FileRoutesByFullPath {
   '/settings': typeof AuthenticatedSettingsRoute
   '/wallet': typeof AuthenticatedWalletRoute
   '/a/$publicId': typeof APublicIdRoute
+  '/about/ai-agents': typeof AboutAiAgentsRoute
   '/about/anonymous-questions': typeof AboutAnonymousQuestionsRoute
   '/about/badges': typeof AboutBadgesRoute
   '/about/brand': typeof AboutBrandRoute
@@ -2756,6 +2803,7 @@ export interface FileRoutesByFullPath {
   '/api/admin/mail-check': typeof ApiAdminMailCheckRoute
   '/api/agent/identity': typeof ApiAgentIdentityRoute
   '/api/agent/links': typeof ApiAgentLinksRoute
+  '/api/agent/sandbox': typeof ApiAgentSandboxRoute
   '/api/agent/workspaces': typeof ApiAgentWorkspacesRoute
   '/api/ai/rewrite': typeof ApiAiRewriteRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -2838,9 +2886,13 @@ export interface FileRoutesByFullPath {
   '/console/apps/$appId': typeof AuthenticatedConsoleAppsAppIdRouteWithChildren
   '/console/apps/new': typeof AuthenticatedConsoleAppsNewRoute
   '/studio/personal/$feature': typeof AuthenticatedStudioPersonalFeatureRoute
+  '/studio/workspaces/claim': typeof AuthenticatedStudioWorkspacesClaimRoute
   '/studio/workspaces/new': typeof AuthenticatedStudioWorkspacesNewRoute
   '/api/public/email/unsubscribe': typeof ApiPublicEmailUnsubscribeRoute
   '/api/agent/profile/draft': typeof ApiAgentProfileDraftRoute
+  '/api/agent/sandbox/apps': typeof ApiAgentSandboxAppsRoute
+  '/api/agent/sandbox/profile': typeof ApiAgentSandboxProfileRoute
+  '/api/agent/sandbox/workspace': typeof ApiAgentSandboxWorkspaceRoute
   '/api/audit/revert/$logId': typeof ApiAuditRevertLogIdRoute
   '/api/public/auth/providers': typeof ApiPublicAuthProvidersRoute
   '/api/public/badge/$handle': typeof ApiPublicBadgeHandleRoute
@@ -2974,12 +3026,14 @@ export interface FileRoutesByTo {
   '/.well-known/jwks.json': typeof DotwellKnownJwksDotjsonRoute
   '/.well-known/openapi.json': typeof DotwellKnownOpenapiDotjsonRoute
   '/.well-known/openid-configuration': typeof DotwellKnownOpenidConfigurationRoute
+  '/.well-known/rout-agent.json': typeof DotwellKnownRoutAgentDotjsonRoute
   '/agenda': typeof AuthenticatedAgendaRoute
   '/domains': typeof AuthenticatedDomainsRoute
   '/my-data': typeof AuthenticatedMyDataRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/wallet': typeof AuthenticatedWalletRoute
   '/a/$publicId': typeof APublicIdRoute
+  '/about/ai-agents': typeof AboutAiAgentsRoute
   '/about/anonymous-questions': typeof AboutAnonymousQuestionsRoute
   '/about/badges': typeof AboutBadgesRoute
   '/about/brand': typeof AboutBrandRoute
@@ -3140,6 +3194,7 @@ export interface FileRoutesByTo {
   '/api/admin/mail-check': typeof ApiAdminMailCheckRoute
   '/api/agent/identity': typeof ApiAgentIdentityRoute
   '/api/agent/links': typeof ApiAgentLinksRoute
+  '/api/agent/sandbox': typeof ApiAgentSandboxRoute
   '/api/agent/workspaces': typeof ApiAgentWorkspacesRoute
   '/api/ai/rewrite': typeof ApiAiRewriteRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -3221,9 +3276,13 @@ export interface FileRoutesByTo {
   '/qr-code-generator/payment': typeof QrCodeGeneratorPaymentIndexRoute
   '/console/apps/new': typeof AuthenticatedConsoleAppsNewRoute
   '/studio/personal/$feature': typeof AuthenticatedStudioPersonalFeatureRoute
+  '/studio/workspaces/claim': typeof AuthenticatedStudioWorkspacesClaimRoute
   '/studio/workspaces/new': typeof AuthenticatedStudioWorkspacesNewRoute
   '/api/public/email/unsubscribe': typeof ApiPublicEmailUnsubscribeRoute
   '/api/agent/profile/draft': typeof ApiAgentProfileDraftRoute
+  '/api/agent/sandbox/apps': typeof ApiAgentSandboxAppsRoute
+  '/api/agent/sandbox/profile': typeof ApiAgentSandboxProfileRoute
+  '/api/agent/sandbox/workspace': typeof ApiAgentSandboxWorkspaceRoute
   '/api/audit/revert/$logId': typeof ApiAuditRevertLogIdRoute
   '/api/public/auth/providers': typeof ApiPublicAuthProvidersRoute
   '/api/public/badge/$handle': typeof ApiPublicBadgeHandleRoute
@@ -3371,6 +3430,7 @@ export interface FileRoutesById {
   '/.well-known/jwks.json': typeof DotwellKnownJwksDotjsonRoute
   '/.well-known/openapi.json': typeof DotwellKnownOpenapiDotjsonRoute
   '/.well-known/openid-configuration': typeof DotwellKnownOpenidConfigurationRoute
+  '/.well-known/rout-agent.json': typeof DotwellKnownRoutAgentDotjsonRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/agenda': typeof AuthenticatedAgendaRoute
   '/_authenticated/console': typeof AuthenticatedConsoleRouteWithChildren
@@ -3379,6 +3439,7 @@ export interface FileRoutesById {
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/wallet': typeof AuthenticatedWalletRoute
   '/a/$publicId': typeof APublicIdRoute
+  '/about/ai-agents': typeof AboutAiAgentsRoute
   '/about/anonymous-questions': typeof AboutAnonymousQuestionsRoute
   '/about/badges': typeof AboutBadgesRoute
   '/about/brand': typeof AboutBrandRoute
@@ -3541,6 +3602,7 @@ export interface FileRoutesById {
   '/api_/admin/mail-check': typeof ApiAdminMailCheckRoute
   '/api_/agent/identity': typeof ApiAgentIdentityRoute
   '/api_/agent/links': typeof ApiAgentLinksRoute
+  '/api_/agent/sandbox': typeof ApiAgentSandboxRoute
   '/api_/agent/workspaces': typeof ApiAgentWorkspacesRoute
   '/api_/ai/rewrite': typeof ApiAiRewriteRoute
   '/api_/auth/$': typeof ApiAuthSplatRoute
@@ -3623,9 +3685,13 @@ export interface FileRoutesById {
   '/_authenticated/console/apps/$appId': typeof AuthenticatedConsoleAppsAppIdRouteWithChildren
   '/_authenticated/console/apps/new': typeof AuthenticatedConsoleAppsNewRoute
   '/_authenticated/studio_/personal/$feature': typeof AuthenticatedStudioPersonalFeatureRoute
+  '/_authenticated/studio_/workspaces/claim': typeof AuthenticatedStudioWorkspacesClaimRoute
   '/_authenticated/studio_/workspaces/new': typeof AuthenticatedStudioWorkspacesNewRoute
   '/api/public/email/unsubscribe': typeof ApiPublicEmailUnsubscribeRoute
   '/api_/agent/profile/draft': typeof ApiAgentProfileDraftRoute
+  '/api_/agent/sandbox_/apps': typeof ApiAgentSandboxAppsRoute
+  '/api_/agent/sandbox_/profile': typeof ApiAgentSandboxProfileRoute
+  '/api_/agent/sandbox_/workspace': typeof ApiAgentSandboxWorkspaceRoute
   '/api_/audit/revert/$logId': typeof ApiAuditRevertLogIdRoute
   '/api_/public/auth/providers': typeof ApiPublicAuthProvidersRoute
   '/api_/public/badge/$handle': typeof ApiPublicBadgeHandleRoute
@@ -3773,6 +3839,7 @@ export interface FileRouteTypes {
     | '/.well-known/jwks.json'
     | '/.well-known/openapi.json'
     | '/.well-known/openid-configuration'
+    | '/.well-known/rout-agent.json'
     | '/admin'
     | '/agenda'
     | '/console'
@@ -3781,6 +3848,7 @@ export interface FileRouteTypes {
     | '/settings'
     | '/wallet'
     | '/a/$publicId'
+    | '/about/ai-agents'
     | '/about/anonymous-questions'
     | '/about/badges'
     | '/about/brand'
@@ -3943,6 +4011,7 @@ export interface FileRouteTypes {
     | '/api/admin/mail-check'
     | '/api/agent/identity'
     | '/api/agent/links'
+    | '/api/agent/sandbox'
     | '/api/agent/workspaces'
     | '/api/ai/rewrite'
     | '/api/auth/$'
@@ -4025,9 +4094,13 @@ export interface FileRouteTypes {
     | '/console/apps/$appId'
     | '/console/apps/new'
     | '/studio/personal/$feature'
+    | '/studio/workspaces/claim'
     | '/studio/workspaces/new'
     | '/api/public/email/unsubscribe'
     | '/api/agent/profile/draft'
+    | '/api/agent/sandbox/apps'
+    | '/api/agent/sandbox/profile'
+    | '/api/agent/sandbox/workspace'
     | '/api/audit/revert/$logId'
     | '/api/public/auth/providers'
     | '/api/public/badge/$handle'
@@ -4161,12 +4234,14 @@ export interface FileRouteTypes {
     | '/.well-known/jwks.json'
     | '/.well-known/openapi.json'
     | '/.well-known/openid-configuration'
+    | '/.well-known/rout-agent.json'
     | '/agenda'
     | '/domains'
     | '/my-data'
     | '/settings'
     | '/wallet'
     | '/a/$publicId'
+    | '/about/ai-agents'
     | '/about/anonymous-questions'
     | '/about/badges'
     | '/about/brand'
@@ -4327,6 +4402,7 @@ export interface FileRouteTypes {
     | '/api/admin/mail-check'
     | '/api/agent/identity'
     | '/api/agent/links'
+    | '/api/agent/sandbox'
     | '/api/agent/workspaces'
     | '/api/ai/rewrite'
     | '/api/auth/$'
@@ -4408,9 +4484,13 @@ export interface FileRouteTypes {
     | '/qr-code-generator/payment'
     | '/console/apps/new'
     | '/studio/personal/$feature'
+    | '/studio/workspaces/claim'
     | '/studio/workspaces/new'
     | '/api/public/email/unsubscribe'
     | '/api/agent/profile/draft'
+    | '/api/agent/sandbox/apps'
+    | '/api/agent/sandbox/profile'
+    | '/api/agent/sandbox/workspace'
     | '/api/audit/revert/$logId'
     | '/api/public/auth/providers'
     | '/api/public/badge/$handle'
@@ -4557,6 +4637,7 @@ export interface FileRouteTypes {
     | '/.well-known/jwks.json'
     | '/.well-known/openapi.json'
     | '/.well-known/openid-configuration'
+    | '/.well-known/rout-agent.json'
     | '/_authenticated/admin'
     | '/_authenticated/agenda'
     | '/_authenticated/console'
@@ -4565,6 +4646,7 @@ export interface FileRouteTypes {
     | '/_authenticated/settings'
     | '/_authenticated/wallet'
     | '/a/$publicId'
+    | '/about/ai-agents'
     | '/about/anonymous-questions'
     | '/about/badges'
     | '/about/brand'
@@ -4727,6 +4809,7 @@ export interface FileRouteTypes {
     | '/api_/admin/mail-check'
     | '/api_/agent/identity'
     | '/api_/agent/links'
+    | '/api_/agent/sandbox'
     | '/api_/agent/workspaces'
     | '/api_/ai/rewrite'
     | '/api_/auth/$'
@@ -4809,9 +4892,13 @@ export interface FileRouteTypes {
     | '/_authenticated/console/apps/$appId'
     | '/_authenticated/console/apps/new'
     | '/_authenticated/studio_/personal/$feature'
+    | '/_authenticated/studio_/workspaces/claim'
     | '/_authenticated/studio_/workspaces/new'
     | '/api/public/email/unsubscribe'
     | '/api_/agent/profile/draft'
+    | '/api_/agent/sandbox_/apps'
+    | '/api_/agent/sandbox_/profile'
+    | '/api_/agent/sandbox_/workspace'
     | '/api_/audit/revert/$logId'
     | '/api_/public/auth/providers'
     | '/api_/public/badge/$handle'
@@ -4959,6 +5046,7 @@ export interface RootRouteChildren {
   DotwellKnownJwksDotjsonRoute: typeof DotwellKnownJwksDotjsonRoute
   DotwellKnownOpenapiDotjsonRoute: typeof DotwellKnownOpenapiDotjsonRoute
   DotwellKnownOpenidConfigurationRoute: typeof DotwellKnownOpenidConfigurationRoute
+  DotwellKnownRoutAgentDotjsonRoute: typeof DotwellKnownRoutAgentDotjsonRoute
   APublicIdRoute: typeof APublicIdRoute
   AccountAccountViewRoute: typeof AccountAccountViewRoute
   ApiMcpRoute: typeof ApiMcpRoute
@@ -5000,6 +5088,7 @@ export interface RootRouteChildren {
   ApiAdminMailCheckRoute: typeof ApiAdminMailCheckRoute
   ApiAgentIdentityRoute: typeof ApiAgentIdentityRoute
   ApiAgentLinksRoute: typeof ApiAgentLinksRoute
+  ApiAgentSandboxRoute: typeof ApiAgentSandboxRoute
   ApiAgentWorkspacesRoute: typeof ApiAgentWorkspacesRoute
   ApiAiRewriteRoute: typeof ApiAiRewriteRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
@@ -5049,6 +5138,9 @@ export interface RootRouteChildren {
   UUsernameTipRoute: typeof UUsernameTipRoute
   WSlugFeedbackRoute: typeof WSlugFeedbackRoute
   ApiAgentProfileDraftRoute: typeof ApiAgentProfileDraftRoute
+  ApiAgentSandboxAppsRoute: typeof ApiAgentSandboxAppsRoute
+  ApiAgentSandboxProfileRoute: typeof ApiAgentSandboxProfileRoute
+  ApiAgentSandboxWorkspaceRoute: typeof ApiAgentSandboxWorkspaceRoute
   ApiAuditRevertLogIdRoute: typeof ApiAuditRevertLogIdRoute
   ApiPublicAuthProvidersRoute: typeof ApiPublicAuthProvidersRoute
   ApiPublicBadgeHandleRoute: typeof ApiPublicBadgeHandleRoute
@@ -5571,6 +5663,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DotwellKnownOpenidConfigurationRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/.well-known/rout-agent.json': {
+      id: '/.well-known/rout-agent.json'
+      path: '/.well-known/rout-agent.json'
+      fullPath: '/.well-known/rout-agent.json'
+      preLoaderRoute: typeof DotwellKnownRoutAgentDotjsonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/admin': {
       id: '/_authenticated/admin'
       path: '/admin'
@@ -5632,6 +5731,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/about/'
       preLoaderRoute: typeof AboutIndexRouteImport
+      parentRoute: typeof AboutRoute
+    }
+    '/about/ai-agents': {
+      id: '/about/ai-agents'
+      path: '/ai-agents'
+      fullPath: '/about/ai-agents'
+      preLoaderRoute: typeof AboutAiAgentsRouteImport
       parentRoute: typeof AboutRoute
     }
     '/about/anonymous-questions': {
@@ -6782,6 +6888,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAgentLinksRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api_/agent/sandbox': {
+      id: '/api_/agent/sandbox'
+      path: '/api/agent/sandbox'
+      fullPath: '/api/agent/sandbox'
+      preLoaderRoute: typeof ApiAgentSandboxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api_/agent/workspaces': {
       id: '/api_/agent/workspaces'
       path: '/api/agent/workspaces'
@@ -7342,6 +7455,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedStudioPersonalFeatureRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/studio_/workspaces/claim': {
+      id: '/_authenticated/studio_/workspaces/claim'
+      path: '/studio/workspaces/claim'
+      fullPath: '/studio/workspaces/claim'
+      preLoaderRoute: typeof AuthenticatedStudioWorkspacesClaimRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/studio_/workspaces/new': {
       id: '/_authenticated/studio_/workspaces/new'
       path: '/studio/workspaces/new'
@@ -7361,6 +7481,27 @@ declare module '@tanstack/react-router' {
       path: '/api/agent/profile/draft'
       fullPath: '/api/agent/profile/draft'
       preLoaderRoute: typeof ApiAgentProfileDraftRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api_/agent/sandbox_/apps': {
+      id: '/api_/agent/sandbox_/apps'
+      path: '/api/agent/sandbox/apps'
+      fullPath: '/api/agent/sandbox/apps'
+      preLoaderRoute: typeof ApiAgentSandboxAppsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api_/agent/sandbox_/profile': {
+      id: '/api_/agent/sandbox_/profile'
+      path: '/api/agent/sandbox/profile'
+      fullPath: '/api/agent/sandbox/profile'
+      preLoaderRoute: typeof ApiAgentSandboxProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api_/agent/sandbox_/workspace': {
+      id: '/api_/agent/sandbox_/workspace'
+      path: '/api/agent/sandbox/workspace'
+      fullPath: '/api/agent/sandbox/workspace'
+      preLoaderRoute: typeof ApiAgentSandboxWorkspaceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api_/audit/revert/$logId': {
@@ -8063,6 +8204,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedStudioBookingRoute: typeof AuthenticatedStudioBookingRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
   AuthenticatedStudioPersonalFeatureRoute: typeof AuthenticatedStudioPersonalFeatureRoute
+  AuthenticatedStudioWorkspacesClaimRoute: typeof AuthenticatedStudioWorkspacesClaimRoute
   AuthenticatedStudioWorkspacesNewRoute: typeof AuthenticatedStudioWorkspacesNewRoute
   AuthenticatedStudioWWorkspaceSlugFeatureRoute: typeof AuthenticatedStudioWWorkspaceSlugFeatureRoute
   AuthenticatedStudioWWorkspaceSlugHubRoute: typeof AuthenticatedStudioWWorkspaceSlugHubRoute
@@ -8091,6 +8233,8 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
   AuthenticatedStudioPersonalFeatureRoute:
     AuthenticatedStudioPersonalFeatureRoute,
+  AuthenticatedStudioWorkspacesClaimRoute:
+    AuthenticatedStudioWorkspacesClaimRoute,
   AuthenticatedStudioWorkspacesNewRoute: AuthenticatedStudioWorkspacesNewRoute,
   AuthenticatedStudioWWorkspaceSlugFeatureRoute:
     AuthenticatedStudioWWorkspaceSlugFeatureRoute,
@@ -8107,6 +8251,7 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
 )
 
 interface AboutRouteChildren {
+  AboutAiAgentsRoute: typeof AboutAiAgentsRoute
   AboutAnonymousQuestionsRoute: typeof AboutAnonymousQuestionsRoute
   AboutBadgesRoute: typeof AboutBadgesRoute
   AboutBrandRoute: typeof AboutBrandRoute
@@ -8123,6 +8268,7 @@ interface AboutRouteChildren {
 }
 
 const AboutRouteChildren: AboutRouteChildren = {
+  AboutAiAgentsRoute: AboutAiAgentsRoute,
   AboutAnonymousQuestionsRoute: AboutAnonymousQuestionsRoute,
   AboutBadgesRoute: AboutBadgesRoute,
   AboutBrandRoute: AboutBrandRoute,
@@ -8569,6 +8715,7 @@ const rootRouteChildren: RootRouteChildren = {
   DotwellKnownJwksDotjsonRoute: DotwellKnownJwksDotjsonRoute,
   DotwellKnownOpenapiDotjsonRoute: DotwellKnownOpenapiDotjsonRoute,
   DotwellKnownOpenidConfigurationRoute: DotwellKnownOpenidConfigurationRoute,
+  DotwellKnownRoutAgentDotjsonRoute: DotwellKnownRoutAgentDotjsonRoute,
   APublicIdRoute: APublicIdRoute,
   AccountAccountViewRoute: AccountAccountViewRoute,
   ApiMcpRoute: ApiMcpRoute,
@@ -8610,6 +8757,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiAdminMailCheckRoute: ApiAdminMailCheckRoute,
   ApiAgentIdentityRoute: ApiAgentIdentityRoute,
   ApiAgentLinksRoute: ApiAgentLinksRoute,
+  ApiAgentSandboxRoute: ApiAgentSandboxRoute,
   ApiAgentWorkspacesRoute: ApiAgentWorkspacesRoute,
   ApiAiRewriteRoute: ApiAiRewriteRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
@@ -8659,6 +8807,9 @@ const rootRouteChildren: RootRouteChildren = {
   UUsernameTipRoute: UUsernameTipRoute,
   WSlugFeedbackRoute: WSlugFeedbackRoute,
   ApiAgentProfileDraftRoute: ApiAgentProfileDraftRoute,
+  ApiAgentSandboxAppsRoute: ApiAgentSandboxAppsRoute,
+  ApiAgentSandboxProfileRoute: ApiAgentSandboxProfileRoute,
+  ApiAgentSandboxWorkspaceRoute: ApiAgentSandboxWorkspaceRoute,
   ApiAuditRevertLogIdRoute: ApiAuditRevertLogIdRoute,
   ApiPublicAuthProvidersRoute: ApiPublicAuthProvidersRoute,
   ApiPublicBadgeHandleRoute: ApiPublicBadgeHandleRoute,
