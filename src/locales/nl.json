@@ -1812,5 +1812,11 @@
     "Tik bovenaan op het sticker-icoon.",
     "Kies de Link-sticker en plak je link.",
     "Plaats de sticker op de afbeelding en deel je verhaal."
-  ]
+  ],
+  "shareWidget.askOff.title": "Je vragenpagina staat uit",
+  "shareWidget.askOff.body": "Wie op je link tikt, kan je nu nog geen anoniem bericht sturen. Zet de pagina hieronder aan om te delen.",
+  "shareWidget.askOff.toggle": "Anonieme vragenpagina",
+  "shareWidget.askOff.share": "Nu delen",
+  "shareWidget.askOff.done": "Je anonieme vragenpagina staat aan.",
+  "shareWidget.askOff.failed": "Aanzetten lukte niet. Probeer opnieuw."
 }
