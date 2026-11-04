@@ -71,9 +71,17 @@ export async function claimAgentWorkspace(
   hash: string,
 ): Promise<{ workspaceId: string; slug: string; apps: ClaimedApp[] }> {
   const rows = await withDbContext({ userId, workspaceId: null }, async () => {
-    return (await sql`
-      select workspace_id, slug, pending_apps from public.rout_claim_agent_workspace_v2(${hash})
-    `) as Array<{ workspace_id: string; slug: string; pending_apps: unknown }>;
+    try {
+      return (await sql`
+        select workspace_id, slug, pending_apps from public.rout_claim_agent_workspace_v2(${hash})
+      `) as Array<{ workspace_id: string; slug: string; pending_apps: unknown }>;
+    } catch (error) {
+      // Before db/0202 is applied: the original link-only claim keeps working.
+      if (!/rout_claim_agent_workspace_v2.*does not exist/.test((error as Error).message ?? "")) throw error;
+      return (await sql`
+        select workspace_id, slug, '[]'::jsonb as pending_apps from public.rout_claim_agent_workspace(${hash})
+      `) as Array<{ workspace_id: string; slug: string; pending_apps: unknown }>;
+    }
   });
   const row = rows[0];
   if (!row) throw new Error("claim_not_found");
