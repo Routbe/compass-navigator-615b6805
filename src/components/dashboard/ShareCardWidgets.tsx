@@ -62,35 +62,43 @@ export function ShareWidget({ handle }: { handle: string | null | undefined }) {
     a.href = URL.createObjectURL(file); a.download = file.name; a.click();
     window.setTimeout(() => URL.revokeObjectURL(a.href), 4000);
   };
-  const shareImage = async (withText: boolean) => {
+  // navigator.share must start inside the tap: never await anything before it.
+  const shareImage = async (withText: boolean): Promise<boolean> => {
     if (file && supportsStoryShare(file)) {
       try {
         await navigator.share(withText ? { files: [file], text: `${t(`shareWidget.story.${selected}`)} ${url}` } : { files: [file] });
-        return;
-      } catch (e) { if ((e as Error).name === "AbortError") return; }
+        return true;
+      } catch (e) { if ((e as Error).name === "AbortError") return true; }
     }
-    if (navigator.share) { try { await navigator.share({ url }); return; } catch (e) { if ((e as Error).name === "AbortError") return; } }
-    download();
+    return false;
   };
-  const run = async (p: Platform) => {
-    if (p === "snapchat") {
+  const run = (p: Platform) => {
+    if (p === "snapchat" || p === "instagram") {
       void copyLink(true);
-      // Snapchat attaches the URL as a tappable link on the snap.
-      window.open(`https://www.snapchat.com/scan?attachmentUrl=${encodeURIComponent(url)}`, "_blank", "noopener,noreferrer");
+      void shareImage(false).then((ok) => {
+        if (ok) return;
+        // Desktop / no file sharing: save the image and keep the link on the clipboard.
+        download();
+        toast.success(t("shareWidget.linkReady"));
+      });
       return;
     }
-    if (p === "instagram") { await copyLink(true); toast.success(t("shareWidget.linkReady")); await shareImage(false); return; }
-    await shareImage(p === "whatsapp" || p === "more");
+    void shareImage(true).then(async (ok) => {
+      if (ok) return;
+      if (navigator.share) { try { await navigator.share({ url }); return; } catch (e) { if ((e as Error).name === "AbortError") return; } }
+      await copyLink();
+      download();
+    });
   };
   const pick = (p: Platform) => {
     if ((p === "snapchat" || p === "instagram") && !localStorage.getItem(GUIDE_KEY + p)) { setStep(0); setGuide(p); return; }
-    void run(p);
+    run(p);
   };
   const steps = guide ? (t(`shareWidget.guide.${guide}.steps`, { returnObjects: true }) as string[]) : [];
   const finishGuide = () => {
     if (!guide) return;
     localStorage.setItem(GUIDE_KEY + guide, "1");
-    const p = guide; setGuide(null); void run(p);
+    const p = guide; setGuide(null); run(p);
   };
 
   return (
@@ -119,7 +127,7 @@ export function ShareWidget({ handle }: { handle: string | null | undefined }) {
           </div>
           <div className="grid grid-cols-4 gap-2" aria-label={t("shareWidget.shareTo")}>
             {PLATFORMS.map((p) => (
-              <button key={p} type="button" onClick={() => pick(p)} disabled={p !== "snapchat" && !file}
+              <button key={p} type="button" onClick={() => pick(p)} disabled={!file}
                 className="flex min-h-16 min-w-0 flex-col items-center justify-center gap-1.5 rounded-xl border border-border bg-background/40 px-1 text-xs transition-colors hover:border-foreground/40 disabled:opacity-50">
                 {p === "more" ? <Share2 className="h-5 w-5" aria-hidden /> : <span className="font-display text-base leading-none" aria-hidden>{p === "snapchat" ? "👻" : p === "instagram" ? "◎" : "✆"}</span>}
                 <span className="max-w-full truncate">{t(`shareWidget.platform.${p}`)}</span>
@@ -140,10 +148,7 @@ export function ShareWidget({ handle }: { handle: string | null | undefined }) {
               <span key={i} className={cn("grid h-8 w-8 place-items-center rounded-full text-sm font-semibold transition-colors", i === step ? "bg-foreground text-background" : "bg-muted text-muted-foreground")}>{i + 1}</span>
             ))}
           </div>
-          <div key={step} className="relative grid aspect-[4/3] place-items-center overflow-hidden rounded-2xl bg-muted/60 animate-in fade-in slide-in-from-right-4 duration-300">
-            <span className="absolute h-16 w-16 animate-ping rounded-full bg-foreground/10" aria-hidden />
-            <span className="relative font-display text-5xl" aria-hidden>{step + 1}</span>
-          </div>
+          {guide ? <GuideDemo platform={guide} step={step} preview={preview} /> : null}
           <p className="min-h-12 text-center text-base font-medium" aria-live="polite">{steps[step]}</p>
           <Button type="button" className="min-h-12 w-full" onClick={() => (step < steps.length - 1 ? setStep(step + 1) : finishGuide())}>
             {step < steps.length - 1 ? t("shareWidget.guide.next") : t("shareWidget.guide.go")}
